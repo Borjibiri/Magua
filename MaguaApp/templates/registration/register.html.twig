@@ -1,26 +1,212 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+	<style>
+		/* Fondo de ondas múltiples */
+		.ripple-background {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background: linear-gradient(to bottom, #4f46e5, #3b82f6);
+			z-index: -1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		/* Ondas individuales */
+		.ripple {
+			position: absolute;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.3);
+			opacity: 0;
+			animation: ripple-animation 6s ease-out;
+		}
+
+		/* Animación de las ondas */
+		@keyframes ripple-animation {
+			0% {
+				transform: scale(0.5);
+				opacity: 0.8;
+			}
+			100% {
+				transform: scale(4);
+				opacity: 0;
+			}
+		}
+
+		/* Estilo del formulario */
+		.form-container {
+			max-width: 400px;
+			width: 100%;
+			padding: 20px;
+			background-color: white;
+			background-opacity: 90%;
+			border-radius: 10px;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+		}
+
+		.form-container h1 {
+			font-size: 2rem;
+			color: #1d4ed8; /* Azul */
+			text-align: center;
+			margin-bottom: 1.5rem;
+		}
+
+		/* Estilos de los campos del formulario */
+		.form-input {
+			border: 2px solid #93c5fd;
+			padding: 12px;
+			border-radius: 8px;
+			width: 100%;
+			margin-bottom: 1rem;
+			outline: none;
+			transition: all 0.3s;
+		}
+
+		.form-input:focus {
+			border-color: #1d4ed8;
+			box-shadow: 0 0 5px rgba(29, 78, 216, 0.6);
+		}
+
+		.form-input label {
+			font-size: 1.1rem;
+			color: #1e3a8a; /* Azul oscuro */
+		}
+
+		.submit-btn {
+			background-color: #1d4ed8;
+			color: white;
+			padding: 12px;
+			width: 100%;
+			border-radius: 8px;
+			cursor: pointer;
+			font-size: 1.2rem;
+			transition: background-color 0.3s;
+		}
+
+		.submit-btn:hover {
+			background-color: #2563eb;
+		}
+
+		.text-center {
+			text-align: center;
+		}
+
+		/* Enlaces */
+		.text-link {
+			color: #2563eb;
+			text-decoration: none;
+		}
+
+		.text-link:hover {
+			text-decoration: underline;
+		}
+	</style>
+{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+	<div class="ripple-background"></div>
 
-    {{ form_errors(registrationForm) }}
+	<!-- Contenedor del formulario de registro -->
+	<div class="relative flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-blue-600 text-white p-6 rounded-lg shadow-lg backdrop-blur-md">
+		<div class="form-container">
+			<h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.name) }}
-        {{ form_row(registrationForm.surname) }}
-        {{ form_row(registrationForm.phone) }}        
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.adress) }}        
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+			{{ form_errors(registrationForm) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-    <div>
-        <p>Return home page <a href="{{ path ("app_base")}}">here</a></p>
-    </div>
+			{{ form_start(registrationForm) }}
+			<div class="mb-4">
+				{{ form_row(registrationForm.name, { 'attr': { 'class': 'form-input' } }) }}
+			</div>
+			<div class="mb-4">
+				{{ form_row(registrationForm.surname, { 'attr': { 'class': 'form-input' } }) }}
+			</div>
+			<div class="mb-4">
+				{{ form_row(registrationForm.phone, { 'attr': { 'class': 'form-input' } }) }}
+			</div>
+			<div class="mb-4">
+				{{ form_row(registrationForm.email, { 'attr': { 'class': 'form-input' } }) }}
+			</div>
+			<div class="mb-4">
+				{{ form_row(registrationForm.adress, { 'attr': { 'class': 'form-input' } }) }}
+			</div>
+			<div class="mb-4">
+				{{ form_row(registrationForm.plainPassword, { label: 'Password', 'attr': { 'class': 'form-input' } }) }}
+			</div>
+			<div class="mb-4">
+				{{ form_row(registrationForm.agreeTerms, { 'attr': { 'class': 'form-input' } }) }}
+			</div>
+			<div class="text-center">
+				<button type="submit" class="submit-btn">Register</button>
+			</div>
+			{{ form_end(registrationForm) }}
+
+			<div class="mt-4 text-center text-gray-700">
+				<p>Return home page
+					<a href="{{ path('app_base') }}" class="text-link">here</a>
+				</p>
+			</div>
+		</div>
+	</div>
 {% endblock %}
+
+{% block javascripts %}
+	<script>
+		// Función para generar ondas al hacer clic
+function createRipple(event) {
+const rippleBackground = document.querySelector('.ripple-background');
+const ripple = document.createElement('div');
+
+// Configuración de la onda generada por el clic
+ripple.classList.add('ripple');
+ripple.style.width = '100px';
+ripple.style.height = '100px';
+ripple.style.left = `${
+event.clientX - 50
+}px`;
+ripple.style.top = `${
+event.clientY - 50
+}px`;
+
+// Añadir el elemento y eliminarlo después de la animación
+rippleBackground.appendChild(ripple);
+setTimeout(() => ripple.remove(), 6000); // Eliminar después de 6 segundos (duración de la animación)
+}
+
+// Generar ondas aleatorias constantemente
+function initRipples() {
+setInterval(() => {
+const rippleBackground = document.querySelector('.ripple-background');
+const ripple = document.createElement('div');
+
+// Generar ondas aleatorias en diferentes posiciones
+const width = Math.random() * 100 + 50; // Tamaño de onda aleatorio
+const height = width;
+const top = Math.random() * window.innerHeight;
+const left = Math.random() * window.innerWidth;
+
+ripple.classList.add('ripple');
+ripple.style.width = `${width}px`;
+ripple.style.height = `${height}px`;
+ripple.style.top = `${top}px`;
+ripple.style.left = `${left}px`;
+
+rippleBackground.appendChild(ripple);
+setTimeout(() => ripple.remove(), 6000); // Eliminar después de 6 segundos
+}, 1500); // Generar una nueva onda cada 1.5 segundos
+}
+
+// Iniciar las ondas aleatorias al cargar la página
+window.onload = initRipples;
+	</script>
+{% endblock %}
+
