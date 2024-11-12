@@ -9,6 +9,13 @@
 
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+        <div>
+            <h1>WELCOME TO MAGUA!</h1>
+            <h3>Si ya tienes cuenta con nosotros <a href="{{ path ('app_login') }}">aqui</a></h3>
+            <h3>Hazte cuenta con nosotros <a href="{{ path ('app_register') }}">aquí</a></h3>
+        </div>
+
+        {% endblock %}
     </body>
 </html>
