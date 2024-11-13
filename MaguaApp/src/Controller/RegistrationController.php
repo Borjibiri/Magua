@@ -15,6 +15,8 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
 {
+    const VALID_EMAILS = ['magua.com', 'magua.es'];
+
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
@@ -22,14 +24,21 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
+            $userEmail = $form->getData()->getEmail();
+            $userEmailDomain = substr(strrchr($userEmail, "@"), 1);
+            if (in_array($userEmailDomain, self::VALID_EMAILS)) {
+                $user->setRoles(roles: ['ROLE_ADMIN']);
+            } else {
+                $user->setRoles(roles: ['ROLE_USER']);
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();

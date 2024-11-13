@@ -1,0 +1,17 @@
+{% block title %}User Dashboard
+{% endblock %}
+
+{% block body %}
+
+	<h1>Welcome to admin dashboard</h1><br>
+
+	<div>
+		<a href="{{ path ("app_product_index") }}">Show products</a>
+	</div><br>
+
+	<button>
+		<a href="{{ path ('app_logout') }}">Log out</a>
+	</button>
+
+
+{% endblock %}

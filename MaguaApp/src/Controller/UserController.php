@@ -50,6 +50,14 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/dashboard', name: 'app_admin')]
+    public function showAdminDasboard(): Response
+    {
+        return $this->render('dashboard/admin.html.twig', [
+            'controller_name' => 'UserController',
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {

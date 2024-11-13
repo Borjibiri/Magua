@@ -11,8 +11,7 @@
 			{{ encore_entry_link_tags('app') }}
 			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 		{% endblock %}
-		<style>
-			/* Fondo de ondas múltiples */
+		{# <style>
 			.ripple-background {
 				position: fixed;
 				top: 0;
@@ -27,7 +26,6 @@
 				justify-content: center;
 			}
 
-			/* Ondas individuales */
 			.ripple {
 				position: absolute;
 				border-radius: 50%;
@@ -36,7 +34,6 @@
 				animation: ripple-animation 6s ease-out;
 			}
 
-			/* Animación de las ondas */
 			@keyframes ripple-animation {
 				0% {
 					transform: scale(0.5);
@@ -51,7 +48,6 @@
 	</head>
 	<body
 		class="flex items-center justify-center min-h-screen text-center text-white" onclick="createRipple(event)">
-		<!-- Fondo de múltiples ondas -->
 		<div class="ripple-background">
 			<div class="ripple" style="width: 100px; height: 100px; top: 30%; left: 20%; animation-delay: 0s;"></div>
 			<div class="ripple" style="width: 120px; height: 120px; top: 50%; left: 40%; animation-delay: 1s;"></div>
@@ -61,9 +57,8 @@
 			<div class="ripple" style="width: 130px; height: 130px; top: 60%; left: 30%; animation-delay: 1.5s;"></div>
 			<div class="ripple" style="width: 110px; height: 110px; top: 80%; left: 50%; animation-delay: 2.5s;"></div>
 			<div class="ripple" style="width: 150px; height: 150px; top: 30%; left: 10%; animation-delay: 3.5s;"></div>
-		</div>
+		</div> #}
 
-		<!-- Contenido centrado -->
 		{% block body %}
 			<div class="relative p-8 bg-blue-900 bg-opacity-10 rounded-lg shadow-lg backdrop-blur-md">
 				<h1 class="text-5xl font-bold tracking-wide text-blue-100 mb-6 drop-shadow-md">
@@ -84,13 +79,11 @@
 			</div>
 		{% endblock %}
 
-		<script>
-			// Función para generar ondas al hacer clic
+		{# <script>
 function createRipple(event) {
 const rippleBackground = document.querySelector('.ripple-background');
 const ripple = document.createElement('div');
 
-// Configuración de la onda generada por el clic
 ripple.classList.add('ripple');
 ripple.style.width = '100px';
 ripple.style.height = '100px';
@@ -101,19 +94,16 @@ ripple.style.top = `${
 event.clientY - 50
 }px`;
 
-// Añadir el elemento y eliminarlo después de la animación
 rippleBackground.appendChild(ripple);
-setTimeout(() => ripple.remove(), 6000); // Eliminar después de 6 segundos (duración de la animación)
+setTimeout(() => ripple.remove(), 6000);
 }
 
-// Configuración inicial para crear un ciclo infinito de ondas
 function initRipples() {
 setInterval(() => {
 const rippleBackground = document.querySelector('.ripple-background');
 const ripple = document.createElement('div');
 
-// Generar ondas aleatorias en diferentes posiciones
-const width = Math.random() * 100 + 50; // Tamaño de onda aleatorio
+const width = Math.random() * 100 + 50;
 const height = width;
 const top = Math.random() * window.innerHeight;
 const left = Math.random() * window.innerWidth;
@@ -125,13 +115,12 @@ ripple.style.top = `${top}px`;
 ripple.style.left = `${left}px`;
 
 rippleBackground.appendChild(ripple);
-setTimeout(() => ripple.remove(), 6000); // Eliminar después de 6 segundos
-}, 1500); // Generar una nueva onda cada 1.5 segundos
+setTimeout(() => ripple.remove(), 6000);
+}, 1500);
 }
 
-// Iniciar las ondas aleatorias al cargar la página
 window.onload = initRipples;
-		</script>
+		</script> #}
 	</body>
 </html>
 

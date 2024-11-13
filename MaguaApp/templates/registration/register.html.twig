@@ -52,11 +52,12 @@
 			background-opacity: 90%;
 			border-radius: 10px;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+			z-index: 1; /* Colocar el formulario encima del fondo */
 		}
 
 		.form-container h1 {
 			font-size: 2rem;
-			color: #1d4ed8; /* Azul */
+			color: #1d4ed8;
 			text-align: center;
 			margin-bottom: 1.5rem;
 		}
@@ -79,7 +80,7 @@
 
 		.form-input label {
 			font-size: 1.1rem;
-			color: #1e3a8a; /* Azul oscuro */
+			color: #1e3a8a;
 		}
 
 		.submit-btn {
@@ -95,6 +96,29 @@
 
 		.submit-btn:hover {
 			background-color: #2563eb;
+		}
+
+		/* Estilos específicos del checkbox */
+		.form-check {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.form-check-input {
+			width: 1.2rem;
+			height: 1.2rem;
+			margin-right: 0.5rem;
+			cursor: pointer;
+		}
+
+		.form-check-label {
+			color: #2563eb;
+			text-decoration: none;
+		}
+
+		.form-check-label:hover {
+			text-decoration: underline;
 		}
 
 		.text-center {
@@ -124,27 +148,35 @@
 			{{ form_errors(registrationForm) }}
 
 			{{ form_start(registrationForm) }}
-			<div class="mb-4">
+			<div class="mb-4 text-center text-gray-700">
 				{{ form_row(registrationForm.name, { 'attr': { 'class': 'form-input' } }) }}
 			</div>
-			<div class="mb-4">
+			<div class="mb-4 text-center text-gray-700">
 				{{ form_row(registrationForm.surname, { 'attr': { 'class': 'form-input' } }) }}
 			</div>
-			<div class="mb-4">
+			<div class="mb-4 text-center text-gray-700">
 				{{ form_row(registrationForm.phone, { 'attr': { 'class': 'form-input' } }) }}
 			</div>
-			<div class="mb-4">
+			<div class="mb-4 text-center text-gray-700">
 				{{ form_row(registrationForm.email, { 'attr': { 'class': 'form-input' } }) }}
 			</div>
-			<div class="mb-4">
-				{{ form_row(registrationForm.adress, { 'attr': { 'class': 'form-input' } }) }}
+			<div class="mb-4 text-center text-gray-700">
+				{{ form_row(registrationForm.address, { 'attr': { 'class': 'form-input' } }) }}
 			</div>
-			<div class="mb-4">
+			<div class="mb-4 text-center text-gray-700">
 				{{ form_row(registrationForm.plainPassword, { label: 'Password', 'attr': { 'class': 'form-input' } }) }}
 			</div>
-			<div class="mb-4">
-				{{ form_row(registrationForm.agreeTerms, { 'attr': { 'class': 'form-input' } }) }}
+
+			<!-- Checkbox de términos y condiciones con enlace -->
+			<div class="form-check mb-4 text-center">
+				{{ form_widget(registrationForm.agreeTerms, { 'attr': { 'class': 'form-check-input' } }) }}
+				<label for="{{ registrationForm.agreeTerms.vars.id }}" class="form-check-label">
+					<p>I agree to the
+						<a href="{{ path ('app_terms') }}" target="_blank" class="text-link">terms and conditions</a>
+					</p>
+				</label>
 			</div>
+
 			<div class="text-center">
 				<button type="submit" class="submit-btn">Register</button>
 			</div>
@@ -161,52 +193,27 @@
 
 {% block javascripts %}
 	<script>
-		// Función para generar ondas al hacer clic
-function createRipple(event) {
-const rippleBackground = document.querySelector('.ripple-background');
-const ripple = document.createElement('div');
-
-// Configuración de la onda generada por el clic
-ripple.classList.add('ripple');
-ripple.style.width = '100px';
-ripple.style.height = '100px';
-ripple.style.left = `${
-event.clientX - 50
-}px`;
-ripple.style.top = `${
-event.clientY - 50
-}px`;
-
-// Añadir el elemento y eliminarlo después de la animación
-rippleBackground.appendChild(ripple);
-setTimeout(() => ripple.remove(), 6000); // Eliminar después de 6 segundos (duración de la animación)
-}
-
-// Generar ondas aleatorias constantemente
-function initRipples() {
+		function initRipples() {
 setInterval(() => {
 const rippleBackground = document.querySelector('.ripple-background');
 const ripple = document.createElement('div');
-
-// Generar ondas aleatorias en diferentes posiciones
-const width = Math.random() * 100 + 50; // Tamaño de onda aleatorio
-const height = width;
-const top = Math.random() * window.innerHeight;
-const left = Math.random() * window.innerWidth;
-
+const size = Math.random() * 100 + 50;
 ripple.classList.add('ripple');
-ripple.style.width = `${width}px`;
-ripple.style.height = `${height}px`;
-ripple.style.top = `${top}px`;
-ripple.style.left = `${left}px`;
-
+ripple.style.width = `${size}px`;
+ripple.style.height = `${size}px`;
+ripple.style.top = `${
+Math.random() * window.innerHeight
+}px`;
+ripple.style.left = `${
+Math.random() * window.innerWidth
+}px`;
 rippleBackground.appendChild(ripple);
-setTimeout(() => ripple.remove(), 6000); // Eliminar después de 6 segundos
-}, 1500); // Generar una nueva onda cada 1.5 segundos
+setTimeout(() => ripple.remove(), 6000);
+}, 1500);
 }
 
-// Iniciar las ondas aleatorias al cargar la página
 window.onload = initRipples;
 	</script>
 {% endblock %}
+
 

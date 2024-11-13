@@ -4,11 +4,15 @@
 
 {% block body %}
 
-    <h1>Welcome to dashboard</h1>
+    <h1>Welcome to user dashboard</h1><br>
+   
+    <div>
+    <a href="{{ path ("app_product_index") }}">Make an order</a>
+    </div><br>
 
-<button>
-	<a href="{{ path ('app_logout') }}">Log out</a>
-</button>
+    <button>
+	    <a href="{{ path ('app_logout') }}">Log out</a>
+    </button>
 
 
 {% endblock %}
