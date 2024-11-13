@@ -36,6 +36,7 @@ class RegistrationController extends AbstractController
             $userEmailDomain = substr(strrchr($userEmail, "@"), 1);
             if (in_array($userEmailDomain, self::VALID_EMAILS)) {
                 $user->setRoles(roles: ['ROLE_ADMIN']);
+                
             } else {
                 $user->setRoles(roles: ['ROLE_USER']);
             }
@@ -48,6 +49,7 @@ class RegistrationController extends AbstractController
                 $user,
                 $authenticator,
                 $request
+                // return $this->render('app_admin');
             );
         }
 
