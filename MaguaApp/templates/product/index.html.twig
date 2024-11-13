@@ -6,9 +6,18 @@
 {% block body %}
 
 
+
 	<h1 class='!text-red-400'>Productos Titulo</h1>
 
-for product in products 
+    {% for product in products %}
+    <tr>
+    <td>{{ product.id }}</td>
+    <td>{{ product.name }}</td>
+    <td>{{ product.quantity }}</td>
+
+    
+    </tr>
+        
 	{# Card #}
 	<div
 		class="w-full max-w-sm bg-red-500 border border-gray-200 rounded-lg shadow">
@@ -37,7 +46,7 @@ for product in products
 			</div>
 		</div>
 	</div>
-
+{% endfor %}
 
 	{# <div class="w-full max-w-sm bg-red-500 border border-gray-200 rounded-lg shadow">
 			<a href="#">
