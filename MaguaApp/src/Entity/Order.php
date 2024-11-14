@@ -5,11 +5,15 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 class Order
 {
+    #[ManyToMany(targetEntity: "Product", inversedBy: "orders")]
+    #[JoinTable(name: "orders_products")]
+    private $products;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
