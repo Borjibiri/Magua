@@ -5,15 +5,17 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 class Order
 {
-    #[ManyToMany(targetEntity: "Product", inversedBy: "orders")]
-    #[JoinTable(name: "orders_products")]
-    private $products;
+  //  #[ManyToMany(targetEntity: "Product", inversedBy: "orders")]
+    
+//#[JoinTable(name: "order_product")]
+    #[OneToMany(targetEntity: "OrderProduct", mappedBy: "order")]
+    private $product;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

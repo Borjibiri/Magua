@@ -4,13 +4,14 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
-    #[ManyToMany(targetEntity: "Order", mappedBy:"products")]
-    private $orders;
+    //#[ManyToMany(targetEntity: "Order", mappedBy:"products")]
+    #[OneToMany(targetEntity: "OrderProduct", mappedBy: "product")]
+    private $order;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
