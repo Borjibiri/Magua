@@ -3,36 +3,70 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			{% block title %}
+		{% block title %}
 			<title>Welcome!</title>
-			{% endblock %}
+		{% endblock %}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 		{% endblock %}
-</head>
+	</head>
 
 	<body>
 
+		{% block header %}
+
+			<h1 class="text-5xl font-bold tracking-wide text-blue-100 mb-6 drop-shadow-md">
+				WELCOME TO MAGUA!
+			</h1>
+
+			<h3 class="text-lg mb-4">
+
+				<a href="{{ path ('app_product_index') }}" class="text-blue-200 underline hover:text-blue-300 transition duration-300">
+					Products
+				</a>
+			</h3>
+
+			<h3 class="text-lg mb-4">
+				Do you have account?
+			</h3>
+
+			<h3 class="text-lg mb-4">
+				Log in
+				<a href="{{ path ('app_login') }}" class="text-blue-200 underline hover:text-blue-300 transition duration-300">
+					here
+				</a>
+			</h3>
+			<h3 class="text-lg">
+				Register
+				<a href="{{ path ('app_register') }}" class="text-blue-200 underline hover:text-blue-300 transition duration-300">
+					here
+				</a>
+			</h3>
+
+		{% endblock %}
+
+
 		{% block body %}
+
+
 			<div class="relative p-8 bg-blue-900 bg-opacity-50 rounded-lg shadow-lg backdrop-blur-md">
 				<h1 class="text-5xl font-bold tracking-wide text-blue-100 mb-6 drop-shadow-md">
-					WELCOME TO MAGUA!
+				advertising spots
 				</h1>
-				<h3 class="text-lg mb-4">
-					Log in
-					<a href="{{ path ('app_login') }}" class="text-blue-200 underline hover:text-blue-300 transition duration-300">
-						here
-					</a>
-				</h3>
-				<h3 class="text-lg">
-					Register
-					<a href="{{ path ('app_register') }}" class="text-blue-200 underline hover:text-blue-300 transition duration-300">
-						here
-					</a>
-				</h3>
+
 			</div>
 		{% endblock %}
+
+		{% block footer %}
+
+			<h1 class="text-5xl font-bold tracking-wide text-blue-100 mb-6 drop-shadow-md">
+				FOOTER!
+			</h1>
+
+
+		{% endblock %}
+
+
 	</body>
 </html>
-
