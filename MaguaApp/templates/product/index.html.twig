@@ -1,13 +1,27 @@
 
-
-{% block title %}Products
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Productos{% endblock %}</title>
+</head>
 
 {% block body %}
+    <h1 class='!text-red-400'>Productos Titulo</h1>
 
-
-
-	<h1 class='!text-red-400'>Productos Titulo</h1>
+    <!-- Cart Section -->
+    <div id="cart" class="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg">
+        <h3 class="font-semibold">Carrito</h3>
+        <ul id="cart-items">
+            <!-- Aquí se añadirán los productos seleccionados -->
+        </ul>
+        <hr class="my-2">
+        <div class="flex justify-between">
+            <span>Total:</span>
+            <span id="total-amount">0.00</span> <!-- Total sumado aquí -->
+        </div>
+    </div>
 
     {% for product in products %}
     <!-- Card -->
@@ -19,13 +33,12 @@
 
         <!-- Footer -->
         <div class="px-5 pb-5">
-
             <!-- Product Name -->
             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ product.name }}</h5>
             
             <!-- Quantity and Description -->
-            <p class="text-gray-700 dark:text-gray-300 mt-2">Stock: {{ product.quantity }}</p> <!-- ESTO ES PRESCINDIBLE -->
-            <p class="text-gray-700 dark:text-gray-300">{{ product.description }}</p> <!-- Puedes reemplazar la descripción fija con una dinámica si tienes esta información en el objeto `product`. -->
+            <p class="text-gray-700 dark:text-gray-300 mt-2">Stock: {{ product.quantity }}</p>
+            <p class="text-gray-700 dark:text-gray-300">{{ product.description }}</p>
 
             <!-- Size and Other Details -->
             <div class="flex items-center mt-2.5 mb-5">
@@ -34,16 +47,32 @@
 
             <!-- Price and Add to Cart -->
             <div class="flex items-center justify-between">
-                <span class="text-3xl font-bold text-gray-900 dark:text-white">1.5 Euros</span>
-                <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar al carrito</a>
+                <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ product.price }} Euros</span>
+
+                <!-- Quantity Selector -->
+                <input type="number" id="quantity-{{ product.id }}" min="1" max="{{ product.quantity }}" value="1" class="w-16 px-2 py-1 border rounded">
+
+                <!-- Add to Cart Button -->
+                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+                        onclick="addToCart({{ product.id }}, '{{ product.name }}', {{ product.price }})">
+                    Agregar al carrito
+                </button>
             </div>
         </div>
     </div>
-{% endfor %}
+    {% endfor %}
 
-	<button>
-		<a href="{{ path ('app_main') }}">BACK</a>
-	</button>
+    <button>
+        <a href="{{ path ('app_main') }}">BACK</a>
+    </button>
+
+    <!-- JavaScript para gestionar el carrito -->
+    <script>
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function up
+
+	
 
 
 	{# <div class="w-full max-w-sm bg-red-500 border border-gray-200 rounded-lg shadow">
