@@ -34,6 +34,7 @@ class RegistrationController extends AbstractController
             );
             $userEmail = $form->getData()->getEmail();
             $userEmailDomain = substr(strrchr($userEmail, "@"), 1);
+
             if (in_array($userEmailDomain, self::VALID_EMAILS)) {
                 $user->setRoles(roles: ['ROLE_ADMIN']);
                 
@@ -49,8 +50,10 @@ class RegistrationController extends AbstractController
                 $user,
                 $authenticator,
                 $request
-                // return $this->render('app_admin');
-            );
+            );       
+                return $this->render('app_admin');
+            
+         
         }
 
         return $this->render('registration/register.html.twig', [
