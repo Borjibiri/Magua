@@ -59,6 +59,7 @@
 						<div>
 							<span class='product_{{product.id}}_price'>{{ product.price }}</span>
 							<select class="quantity-select">
+								<option value="0">0</option>
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -80,7 +81,7 @@
 
 
 		<div class="cart">
-			<h3>Your Cart</h3>
+			<h3>YOUR CART</h3>
 			<p>Items: 0</p>
 			<p>Total: 0 Euros</p>
 			<button>Proceed to Checkout</button>
@@ -111,6 +112,7 @@ let priceSpan = document.querySelector(`.product_${productId}_price`).innerText;
 const productName = this.closest('.product-card').querySelector('h5').innerText;
 
 const price = parseFloat(this.closest('.product-footer').querySelector('span').innerText.split(' ')[0]);
+
 
 
 const product = {

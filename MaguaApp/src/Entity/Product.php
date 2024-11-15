@@ -29,6 +29,9 @@ class Product
 
     #[ORM\Column]
     private ?float $price = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $img = null;
     
    
 
@@ -81,6 +84,18 @@ class Product
     public function setPrice(float $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(?string $img): static
+    {
+        $this->img = $img;
 
         return $this;
     }
