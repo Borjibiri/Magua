@@ -1,7 +1,13 @@
-
-
-{% block title %}Products
-{% endblock %}
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{% block title %}
+			<title>Order Page</title>
+		{% endblock %}
+	</head>
+</html>
 
 {% block stylesheets %}
 	{{ encore_entry_link_tags('app') }}
@@ -12,11 +18,10 @@
 	<header class="bg-gray-100 shadow-md p-4">
 		<h1 class="text-lg font-bold text-gray-700">Welcome to your order</h1>
 		<nav>
-			<ul
-				class="flex items-center justify-between">
-				<!-- Log out -->
+			<ul class="flex items-center justify-between">
+
 				<li>
-					<a href="{{ path('app_logout') }}" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-red-600 transition">
+					<a href="{{ path('app_logout') }}" class="logout-button">
 						Log out
 					</a>
 				</li>
@@ -26,36 +31,33 @@
 {% endblock %}
 
 {% block body %}
-	<div
-		class="main-content">
-		<!-- Contenedor de productos -->
+	<div class="main-content">
+
 		<div class="product-container">
 			{% for product in products %}
-				<!-- Card -->
-				<div
-					class="product-card bg-blue-800">
-					<!-- Image -->
+
+				<div class="product-card bg-blue-800">
+
 					<a href="#">
 						<img src="https://www.elajonegroherbolarios.com/images/productos/11179/ajonegro2zKcr.jpg" alt="Imagen del producto"/>
 					</a>
 
-					<!-- Footer -->
-					<div
-						class="product-footer">
-						<!-- Product Name -->
+
+					<div class="product-footer">
+
 						<h5>{{ product.name }}</h5>
 
-						<!-- Quantity and Description -->
+
 						<p>{{ product.description }}</p>
 
-						<!-- Size and Other Details -->
+
 						<div>
 							<span></span>
 						</div>
 
-						
+
 						<div>
-							<span>{{ product.price }}</span>
+							<span class='product_{{product.id}}_price'>{{ product.price }}</span>
 							<select class="quantity-select">
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -68,38 +70,118 @@
 								<option value="9">9</option>
 								<option value="10">10</option>
 							</select>
-							
-							<button class="add-to-cart">Add to cart</button>
+
+							<button class="add-to-cart productId-{{product.id}}">Add to Cart</button>
 						</div>
 					</div>
 				</div>
 			{% endfor %}
 		</div>
 
-		
+
 		<div class="cart">
 			<h3>Your Cart</h3>
 			<p>Items: 0</p>
-			<p>Total:  Euros</p>
+			<p>Total: 0 Euros</p>
 			<button>Proceed to Checkout</button>
 		</div>
 	</div>
 
-	
+
 	<button class="back-button">
 		<a href="{{ path ('app_main') }}">Back to profile</a>
 	</button>
 {% endblock %}
 
+{% block javascripts %}
+	<script>
+
+		let cart = [];
+
+
+document.querySelectorAll('.add-to-cart').forEach(button => {
+button.addEventListener('click', function (e) {
+const quantity = parseInt(this.previousElementSibling.value);
+
+let productClasses = e.target.classList;
+let productId = productClasses.value.slice(productClasses.value.indexOf('id'));
+let priceSpan = document.querySelector(`.product_${productId}_price`).innerText;
+
+
+const productName = this.closest('.product-card').querySelector('h5').innerText;
+
+const price = parseFloat(this.closest('.product-footer').querySelector('span').innerText.split(' ')[0]);
+
+
+const product = {
+name: productName,
+quantity: quantity,
+price: priceSpan,
+total: priceSpan * quantity
+};
+
+
+cart.push(product);
+
+
+updateCart();
+});
+});
+
+
+function updateCart() {
+let totalItems = 0;
+let totalAmount = 0;
+
+
+cart.forEach(item => {
+totalItems += item.quantity;
+totalAmount += item.total;
+});
+
+
+document.querySelector('.cart p').innerText = `Items: ${totalItems}`;
+document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
+totalAmount.toFixed(2)
+} Euros`;
+}
+	</script>
+{% endblock %}
+
+
 <style>
-	
+
 	.main-content {
 		display: flex;
 		justify-content: space-between;
 		padding: 20px;
 	}
 
-	
+	.logout-button {
+		display: block;
+		margin: 20px auto;
+		padding: 10px 20px;
+		background-color: #007BFF;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.logout-button:hover {
+		background-color: #0056b3;
+	}
+
+	.back-button a {
+		color: white;
+		text-decoration: none;
+	}
+
+	.back-button:hover {
+		background-color: #0056b3;
+	}
+
+
 	.product-container {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -107,7 +189,7 @@
 		width: 70%;
 	}
 
-	
+
 	.product-card {
 		border: 1px solid #ddd;
 		border-radius: 8px;
@@ -161,7 +243,7 @@
 		background-color: #45a049;
 	}
 
-	
+
 	.cart {
 		width: 25%;
 		border: 1px solid #ddd;
@@ -189,7 +271,7 @@
 		background-color: #0056b3;
 	}
 
-	
+
 	.back-button {
 		display: block;
 		margin: 20px auto;
@@ -210,53 +292,4 @@
 		background-color: #0056b3;
 	}
 </style>
-{% block javascripts %}
-	<script>
-		
-let cart = [];
-
-
-document.querySelectorAll('.add-to-cart').forEach(button => {
-button.addEventListener('click', function () { 
-const quantity = parseInt(this.previousElementSibling.value);
-
-const productName = this.closest('.product-card').querySelector('h5').innerText;
-
-const price = parseFloat(this.closest('.product-footer').querySelector('span').innerText.split(' ')[0]);
-
-
-const product = {
-name: productName,
-quantity: quantity,
-price: price,
-total: price * quantity
-};
-
-
-cart.push(product);
-
-
-updateCart();
-});
-});
-
-
-function updateCart() { 
-let totalItems = 0;
-let totalAmount = 0;
-
-
-cart.forEach(item => {
-totalItems += item.quantity;
-totalAmount += item.total;
-});
-
-
-document.querySelector('.cart p').innerText = `Items: ${totalItems}`;
-document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
-totalAmount.toFixed(2)
-} Euros`;
-}
-	</script>
-{% endblock %}
 

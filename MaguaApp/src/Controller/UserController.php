@@ -55,9 +55,9 @@ class UserController extends AbstractController
     public function showDasboard(ProductRepository $productRepository, ): Response
     {
         $user = $this->getUser();
-        $products = $productRepository->findAll();
+        // $products = $productRepository->findAll();
         return $this->render('dashboard_user/main.html.twig', [
-            'products' => $products,
+            // 'products' => $products,
             'user' => $user,
         ]);
     }

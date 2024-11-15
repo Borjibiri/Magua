@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\DBAL\Types\DecimalType;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 
@@ -25,9 +26,11 @@ class Product
 
     #[ORM\Column]
     private ?int $quantity = null;
-    
+
     #[ORM\Column]
-    private ?int $price = null;
+    private ?float $price = null;
+    
+   
 
     public function getId(): ?int
     {
@@ -70,16 +73,18 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 
         return $this;
     }
+
+   
 }
 
