@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,10 +52,11 @@ class UserController extends AbstractController
     }
 
     #[Route('/dashboard_user', name: 'app_main')]
-    public function showDasboard(): Response
+    public function showDasboard(ProductRepository $productRepository): Response
     {
+        $products = $productRepository->findAll();
         return $this->render('dashboard_user/main.html.twig', [
-            'controller_name' => 'UserController',
+            'products' => $products,
         ]);
     }
 

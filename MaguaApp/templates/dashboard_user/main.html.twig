@@ -1,18 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{% block title %}
+			<title>User Page</title>
+		{% endblock %}
+	</head>
+</html>
 
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
 
-{% block title %}User Dashboard{% endblock %}
+{% block header %}
+	<header class="bg-gray-100 shadow-md p-4">
+		<h1 class="text-lg font-bold text-gray-700">Welcome to user dashboard</h1>
+		<nav>
+			<ul
+				class="flex items-center justify-between">
+				<!-- Make an order -->
+				<li>
+					<a href="{{ path('app_product_index') }}" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600 transition">
+						Make an order
+					</a>
+				</li>
+
+				<!-- Product List Dropdown -->
+				<li class="relative group">
+					<button class="text-black-700 px-4 py-2 hover:text-blue-500 transition">
+						Product List
+					</button>
+					<ul class="absolute left-0 mt-2 w-48 bg-black shadow-lg rounded hidden group-hover:block">
+						<li>
+							<a href="#product1" class="block px-4 py-2 hover:bg-gray-100 transition">
+								Product 1
+							</a>
+						</li>
+						<li>
+							<a href="#product2" class="block px-4 py-2 hover:bg-gray-100 transition">
+								Product 2
+							</a>
+						</li>
+						<li>
+							<a href="#product3" class="block px-4 py-2 hover:bg-gray-100 transition">
+								Product 3
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<!-- Log out -->
+				<li>
+					<a href="{{ path('app_logout') }}" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-red-600 transition">
+						Log out
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+{% endblock %}
 
 {% block body %}
 
-    <h1>Welcome to user dashboard</h1><br>
-   
-    <div>
-    <a href="{{ path ("app_product_index") }}">Make an order</a>
-    </div><br>
+	<!-- Botón de regreso -->
+	<div>
+		<button class="back-button">
+			<a href="{{ path ('app_main') }}">BACK</a>
+		</button>
+	</div>
+{% endblock %}
 
-    <button>
-	    <a href="{{ path ('app_logout') }}">Log out</a>
-    </button>
-
+{% block footer %}
 
 {% endblock %}

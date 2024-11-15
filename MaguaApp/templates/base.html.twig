@@ -7,7 +7,6 @@
 			<title>Welcome!</title>
 		{% endblock %}
 		{% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
 			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 		{% endblock %}
 	</head>
@@ -16,30 +15,30 @@
 
 		{% block header %}
 
-			<h1 class="text-5xl font-bold tracking-wide text-blue-100 mb-6 drop-shadow-md">
+			<h1>
 				WELCOME TO MAGUA!
 			</h1>
 
-			<h3 class="text-lg mb-4">
+			<h3>
 
-				<a href="{{ path ('app_product_index') }}" class="text-blue-200 underline hover:text-blue-300 transition duration-300">
+				<a href="{{ path ('app_product_index') }}">
 					Products
 				</a>
 			</h3>
 
-			<h3 class="text-lg mb-4">
+			<h3>
 				Do you have account?
 			</h3>
 
-			<h3 class="text-lg mb-4">
+			<h3>
 				Log in
-				<a href="{{ path ('app_login') }}" class="text-blue-200 underline hover:text-blue-300 transition duration-300">
+				<a href="{{ path ('app_login') }}">
 					here
 				</a>
 			</h3>
-			<h3 class="text-lg">
+			<h3>
 				Register
-				<a href="{{ path ('app_register') }}" class="text-blue-200 underline hover:text-blue-300 transition duration-300">
+				<a href="{{ path ('app_register') }}">
 					here
 				</a>
 			</h3>
@@ -50,9 +49,9 @@
 		{% block body %}
 
 
-			<div class="relative p-8 bg-blue-900 bg-opacity-50 rounded-lg shadow-lg backdrop-blur-md">
-				<h1 class="text-5xl font-bold tracking-wide text-blue-100 mb-6 drop-shadow-md">
-				advertising spots
+			<div>
+				<h1>
+					advertising spots
 				</h1>
 
 			</div>
@@ -60,7 +59,7 @@
 
 		{% block footer %}
 
-			<h1 class="text-5xl font-bold tracking-wide text-blue-100 mb-6 drop-shadow-md">
+			<h1>
 				FOOTER!
 			</h1>
 

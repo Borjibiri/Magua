@@ -3,94 +3,243 @@
 {% block title %}Products
 {% endblock %}
 
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
+
+{% block header %}
+	<header class="bg-gray-100 shadow-md p-4">
+		<h1 class="text-lg font-bold text-gray-700">Welcome to user dashboard</h1>
+		<nav>
+			<ul
+				class="flex items-center justify-between">
+				<!-- Make an order -->
+				<li>
+					<a href="{{ path('app_product_index') }}" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600 transition">
+						Make an order
+					</a>
+				</li>
+
+				<!-- Product List Dropdown -->
+				<li class="relative group">
+					<button class="text-black-700 px-4 py-2 hover:text-blue-500 transition">
+						Product List
+					</button>
+					<ul class="absolute left-0 mt-2 w-48 bg-black shadow-lg rounded hidden group-hover:block">
+						<li>
+							<a href="#product1" class="block px-4 py-2 hover:bg-gray-100 transition">
+								Product 1
+							</a>
+						</li>
+						<li>
+							<a href="#product2" class="block px-4 py-2 hover:bg-gray-100 transition">
+								Product 2
+							</a>
+						</li>
+						<li>
+							<a href="#product3" class="block px-4 py-2 hover:bg-gray-100 transition">
+								Product 3
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<!-- Log out -->
+				<li>
+					<a href="{{ path('app_logout') }}" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-red-600 transition">
+						Log out
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+{% endblock %}
+
 {% block body %}
+	<div
+		class="main-content">
+		<!-- Contenedor de productos -->
+		<div class="product-container">
+			{% for product in products %}
+				<!-- Card -->
+				<div
+					class="product-card bg-blue-800">
+					<!-- Image -->
+					<a href="#">
+						<img src="https://www.elajonegroherbolarios.com/images/productos/11179/ajonegro2zKcr.jpg" alt="Imagen del producto"/>
+					</a>
 
+					<!-- Footer -->
+					<div
+						class="product-footer">
+						<!-- Product Name -->
+						<h5>{{ product.name }}</h5>
 
+						<!-- Quantity and Description -->
+						<p>{{ product.description }}</p>
 
-	<h1 class='!text-red-400'>Productos Titulo</h1>
+						<!-- Size and Other Details -->
+						<div>
+							<span>5.0 litros</span>
+						</div>
 
-    {% for product in products %}
-    <!-- Card -->
-    <div class="w-full max-w-sm bg-red-500 border border-gray-200 rounded-lg shadow mb-6">
-        <!-- Image -->
-        <a href="#">
-            <img class="p-8 rounded-t-lg" src="https://www.elajonegroherbolarios.com/images/productos/11179/ajonegro2zKcr.jpg" alt="Imagen del producto" />
-        </a>
+						<!-- Price and Quantity Selector -->
+						<div>
+							<span>1.5 Euros</span>
+							<!-- Campo de cantidad -->
+							<select class="quantity-select">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+							</select>
+							<!-- Botón para añadir al carrito -->
+							<button class="add-to-cart">Add to Cart</button>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 
-        <!-- Footer -->
-        <div class="px-5 pb-5">
+		<!-- Carrito de compras -->
+		<div class="cart">
+			<h3>Your Cart</h3>
+			<p>Items: 0</p>
+			<p>Total: 0 Euros</p>
+			<button>Proceed to Checkout</button>
+		</div>
+	</div>
 
-            <!-- Product Name -->
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ product.name }}</h5>
-            
-            <!-- Quantity and Description -->
-            <p class="text-gray-700 dark:text-gray-300 mt-2">Stock: {{ product.quantity }}</p> <!-- ESTO ES PRESCINDIBLE -->
-            <p class="text-gray-700 dark:text-gray-300">{{ product.description }}</p> <!-- Puedes reemplazar la descripción fija con una dinámica si tienes esta información en el objeto `product`. -->
-
-            <!-- Size and Other Details -->
-            <div class="flex items-center mt-2.5 mb-5">
-                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">5.0 litros</span>
-            </div>
-
-            <!-- Price and Add to Cart -->
-            <div class="flex items-center justify-between">
-                <span class="text-3xl font-bold text-gray-900 dark:text-white">1.5 Euros</span>
-                <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar al carrito</a>
-            </div>
-        </div>
-    </div>
-{% endfor %}
-
-	<button>
+	<!-- Botón de regreso -->
+	<button class="back-button">
 		<a href="{{ path ('app_main') }}">BACK</a>
 	</button>
-
-
-	{# <div class="w-full max-w-sm bg-red-500 border border-gray-200 rounded-lg shadow">
-			<a href="#">
-		<img class="p-8 rounded-t-lg" src="https://assets.stickpng.com/thumbs/580b585b2edbce24c47b277b.png" alt="product image"/>
-		
-		
-			</a>
-			<div class="px-5 pb-5">
-				<a href="#">
-					<h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"></h5>
-				</a>
-				<div class="flex items-center mt-2.5 mb-5">
-				
-					<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">5.0 litros</span>
-				</div>
-				<div class="flex items-center justify-between">
-					<span class="text-3xl font-bold text-gray-900 dark:text-white">2 Euros</span>
-					<a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
-				</div>
-			</div>
-		</div>
-		
-		
-		
-		<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-			<a
-				href="#">
-		<img class="p-2 rounded-t-lg z-50" src="https://assets.stickpng.com/thumbs/580b585b2edbce24c47b277b.png" alt="product image"/>
-			</a>
-			<div class="px-5 pb-5 ">
-				<a href="#">
-					<h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"></h5>
-				</a>
-		<div class="flex items-center mt-2.5 mb-5 bg-black">
-		
-					<div class="flex items-center space-x-1 rtl:space-x-reverse">
-		
-					</div>
-					<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">1.65 litros</span>
-				</div>
-				<div class="flex items-center justify-between">
-					<span class="text-3xl font-bold text-gray-900 dark:text-white">3 Euros</span>
-					<a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
-				</div>
-			</div>
-		</div> #}
-
-
 {% endblock %}
+
+<style>
+	/* Contenedor principal, para centrar las tarjetas y el carrito */
+	.main-content {
+		display: flex;
+		justify-content: space-between;
+		padding: 20px;
+	}
+
+	/* Contenedor de productos */
+	.product-container {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 20px;
+		width: 70%;
+	}
+
+	/* Estilo de la tarjeta */
+	.product-card {
+		border: 1px solid #ddd;
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		background-color: #fff;
+	}
+
+	.product-card img {
+		width: 100%;
+		height: auto;
+		border-bottom: 1px solid #ddd;
+	}
+
+	.product-footer {
+		padding: 15px;
+	}
+
+	.product-footer h5 {
+		font-size: 18px;
+		margin-bottom: 10px;
+	}
+
+	.product-footer p {
+		font-size: 14px;
+		margin-bottom: 10px;
+	}
+
+	.product-footer div {
+		margin-bottom: 10px;
+	}
+
+	.quantity-select {
+		padding: 5px;
+		margin-right: 10px;
+		border-radius: 4px;
+		border: 1px solid #ddd;
+		font-size: 14px;
+	}
+
+	.add-to-cart {
+		padding: 8px 12px;
+		background-color: #4CAF50;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.add-to-cart:hover {
+		background-color: #45a049;
+	}
+
+	/* Estilo para el carrito */
+	.cart {
+		width: 25%;
+		border: 1px solid #ddd;
+		padding: 15px;
+		background-color: #f9f9f9;
+		border-radius: 8px;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	.cart h3 {
+		margin-bottom: 20px;
+	}
+
+	.cart button {
+		padding: 10px;
+		background-color: #007BFF;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		width: 100%;
+		cursor: pointer;
+	}
+
+	.cart button:hover {
+		background-color: #0056b3;
+	}
+
+	/* Estilo para el botón de regreso */
+	.back-button {
+		display: block;
+		margin: 20px auto;
+		padding: 10px 20px;
+		background-color: #007BFF;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.back-button a {
+		color: white;
+		text-decoration: none;
+	}
+
+	.back-button:hover {
+		background-color: #0056b3;
+	}
+</style>
+
