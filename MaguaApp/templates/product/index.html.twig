@@ -19,7 +19,6 @@
 		<h1 class="text-lg font-bold text-gray-700">Welcome to your order</h1>
 		<nav>
 			<ul class="flex items-center justify-between">
-
 				<li>
 					<a href="{{ path('app_logout') }}" class="logout-button">
 						Log out
@@ -31,33 +30,23 @@
 {% endblock %}
 
 {% block body %}
-	<div class="main-content">
+	<div
+		class="main-content">
 
+		<!-- Product List -->
 		<div class="product-container">
 			{% for product in products %}
-
 				<div class="product-card bg-blue-800">
-
 					<a href="#">
 						<img src="https://www.elajonegroherbolarios.com/images/productos/11179/ajonegro2zKcr.jpg" alt="Imagen del producto"/>
 					</a>
-
-
 					<div class="product-footer">
-
 						<h5>{{ product.name }}</h5>
-
-
 						<p>{{ product.description }}</p>
-
-
 						<div>
-							<span></span>
+							<span class='product_{{ product.id }}_price'>{{ product.price }}</span>
 						</div>
-
-
 						<div>
-							<span class='product_{{product.id}}_price'>{{ product.price }}</span>
 							<select class="quantity-select">
 								<option value="0">0</option>
 								<option value="1">1</option>
@@ -71,23 +60,26 @@
 								<option value="9">9</option>
 								<option value="10">10</option>
 							</select>
-
-							<button class="add-to-cart productId-{{product.id}}">Add to Cart</button>
+							<button class="add-to-cart productId-{{ product.id }}">Add to Cart</button>
 						</div>
 					</div>
 				</div>
 			{% endfor %}
 		</div>
 
-
+		<!-- Cart Section -->
 		<div class="cart">
 			<h3>YOUR CART</h3>
 			<p>Items: 0</p>
 			<p>Total: 0 Euros</p>
+
+			<div
+				id="cart-items-list"><!-- Cart items will be displayed here -->
+			</div>
+
 			<button>Proceed to Checkout</button>
 		</div>
 	</div>
-
 
 	<button class="back-button">
 		<a href="{{ path ('app_main') }}">Back to profile</a>
@@ -96,56 +88,91 @@
 
 {% block javascripts %}
 	<script>
-
 		let cart = [];
-
 
 document.querySelectorAll('.add-to-cart').forEach(button => {
 button.addEventListener('click', function (e) {
 const quantity = parseInt(this.previousElementSibling.value);
 
+// Verificar si la cantidad es 0
+if (quantity === 0) {
+alert('You cannot add 0 quantity to the cart.');
+return; // No hacer nada si la cantidad es 0
+}
+
 let productClasses = e.target.classList;
 let productId = productClasses.value.slice(productClasses.value.indexOf('id'));
-let priceSpan = document.querySelector(`.product_${productId}_price`).innerText;
-
+let priceSpan = document.querySelector (`.product_${productId}_price`).innerText;
 
 const productName = this.closest('.product-card').querySelector('h5').innerText;
-
-const price = parseFloat(this.closest('.product-footer').querySelector('span').innerText.split(' ')[0]);
-
-
+const price = parseFloat(priceSpan);
 
 const product = {
+id: productId,
 name: productName,
 quantity: quantity,
-price: priceSpan,
-total: priceSpan * quantity
+price: price,
+total: price * quantity
 };
 
-
+// Add product to cart
 cart.push(product);
-
-
 updateCart();
 });
 });
 
-
+// Function to update cart items
 function updateCart() {
 let totalItems = 0;
 let totalAmount = 0;
+let cartItemsHTML = '';
 
+// Clear the cart items list
+document.getElementById('cart-items-list').innerHTML = '';
 
-cart.forEach(item => {
+// Iterate over cart items
+cart.forEach((item, index) => {
 totalItems += item.quantity;
 totalAmount += item.total;
+
+// Add item to cart list
+cartItemsHTML += `
+					<div class="cart-item" id="cart-item-${
+item.id
+}">
+						<span>${
+item.name
+} (x${
+item.quantity
+}) - ${
+item.total.toFixed(2)
+} Euros</span>
+						<button class="remove-from-cart" style="color: white; font-size: 20px; background-color: red; border: 2px solid red; border-radius: 50%; padding: 10px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;"
+       data-index="${index}">
+    🗑️
+</button>
+
+					</div>
+				`;
 });
 
+// Update the cart HTML with the new items
+document.getElementById('cart-items-list').innerHTML = cartItemsHTML;
 
-document.querySelector('.cart p').innerText = `Items: ${totalItems}`;
+// Update the total and item count
+document.querySelector('.cart p:nth-of-type(1)').innerText = `Items: ${totalItems}`;
 document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
 totalAmount.toFixed(2)
 } Euros`;
+
+// Add event listeners to the remove buttons
+document.querySelectorAll('.remove-from-cart').forEach(button => {
+button.addEventListener('click', function () {
+const index = parseInt(this.getAttribute('data-index'));
+cart.splice(index, 1); // Remove the item from the cart
+updateCart(); // Update the cart display
+});
+});
 }
 	</script>
 {% endblock %}
@@ -293,5 +320,16 @@ totalAmount.toFixed(2)
 	.back-button:hover {
 		background-color: #0056b3;
 	}
-</style>
+	.remove-from-cart {
+		color: red !important;
+		font-size: 20px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		margin-left: 10px;
+	}
 
+	.remove-from-cart:hover {
+		color: darkred !important;
+	}
+</style>
