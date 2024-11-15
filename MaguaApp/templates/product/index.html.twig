@@ -50,13 +50,12 @@
 
 						<!-- Size and Other Details -->
 						<div>
-							<span>5.0 litros</span>
+							<span></span>
 						</div>
 
-						<!-- Price and Quantity Selector -->
+						
 						<div>
-							<span>1.5 Euros</span>
-							<!-- Campo de cantidad -->
+							<span>{{ product.price }}</span>
 							<select class="quantity-select">
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -69,38 +68,38 @@
 								<option value="9">9</option>
 								<option value="10">10</option>
 							</select>
-							<!-- Botón para añadir al carrito -->
-							<button class="add-to-cart">Add to Cart</button>
+							
+							<button class="add-to-cart">Add to cart</button>
 						</div>
 					</div>
 				</div>
 			{% endfor %}
 		</div>
 
-		<!-- Carrito de compras -->
+		
 		<div class="cart">
 			<h3>Your Cart</h3>
 			<p>Items: 0</p>
-			<p>Total: 0 Euros</p>
+			<p>Total:  Euros</p>
 			<button>Proceed to Checkout</button>
 		</div>
 	</div>
 
-	<!-- Botón de regreso -->
+	
 	<button class="back-button">
-		<a href="{{ path ('app_main') }}">BACK</a>
+		<a href="{{ path ('app_main') }}">Back to profile</a>
 	</button>
 {% endblock %}
 
 <style>
-	/* Contenedor principal, para centrar las tarjetas y el carrito */
+	
 	.main-content {
 		display: flex;
 		justify-content: space-between;
 		padding: 20px;
 	}
 
-	/* Contenedor de productos */
+	
 	.product-container {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -108,7 +107,7 @@
 		width: 70%;
 	}
 
-	/* Estilo de la tarjeta */
+	
 	.product-card {
 		border: 1px solid #ddd;
 		border-radius: 8px;
@@ -162,7 +161,7 @@
 		background-color: #45a049;
 	}
 
-	/* Estilo para el carrito */
+	
 	.cart {
 		width: 25%;
 		border: 1px solid #ddd;
@@ -190,7 +189,7 @@
 		background-color: #0056b3;
 	}
 
-	/* Estilo para el botón de regreso */
+	
 	.back-button {
 		display: block;
 		margin: 20px auto;
@@ -211,4 +210,53 @@
 		background-color: #0056b3;
 	}
 </style>
+{% block javascripts %}
+	<script>
+		
+let cart = [];
+
+
+document.querySelectorAll('.add-to-cart').forEach(button => {
+button.addEventListener('click', function () { 
+const quantity = parseInt(this.previousElementSibling.value);
+
+const productName = this.closest('.product-card').querySelector('h5').innerText;
+
+const price = parseFloat(this.closest('.product-footer').querySelector('span').innerText.split(' ')[0]);
+
+
+const product = {
+name: productName,
+quantity: quantity,
+price: price,
+total: price * quantity
+};
+
+
+cart.push(product);
+
+
+updateCart();
+});
+});
+
+
+function updateCart() { 
+let totalItems = 0;
+let totalAmount = 0;
+
+
+cart.forEach(item => {
+totalItems += item.quantity;
+totalAmount += item.total;
+});
+
+
+document.querySelector('.cart p').innerText = `Items: ${totalItems}`;
+document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
+totalAmount.toFixed(2)
+} Euros`;
+}
+	</script>
+{% endblock %}
 

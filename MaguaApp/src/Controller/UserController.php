@@ -52,11 +52,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/dashboard_user', name: 'app_main')]
-    public function showDasboard(ProductRepository $productRepository): Response
+    public function showDasboard(ProductRepository $productRepository, ): Response
     {
+        $user = $this->getUser();
         $products = $productRepository->findAll();
         return $this->render('dashboard_user/main.html.twig', [
             'products' => $products,
+            'user' => $user,
         ]);
     }
 

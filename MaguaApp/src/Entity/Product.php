@@ -25,6 +25,9 @@ class Product
 
     #[ORM\Column]
     private ?int $quantity = null;
+    
+    #[ORM\Column]
+    private ?int $price = null;
 
     public function getId(): ?int
     {
@@ -66,4 +69,17 @@ class Product
 
         return $this;
     }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): static
+    {
+        $this->price = $price;
+
+        return $this;
+    }
 }
+
