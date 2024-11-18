@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{% block title %}
+			<title>Payment page</title>
+		{% endblock %}
+	</head>
+</html>
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
+{% block body %}
+<h1>HOLA PEDIDO!</h1>
+{% endblock %}

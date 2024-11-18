@@ -72,7 +72,18 @@
 			<div id="cart-items-list"></div>
 
 
-			<button>Proceed to Checkout</button>
+{# <button>
+<a href="{{ path ('payment_page') }}">
+		Proceed to Checkout</a>
+</button> #}
+
+<button onClick=sendCart()>
+		Proceed to Checkout</a>
+</button>
+
+
+
+
 		</div>
 	</div>
 
@@ -83,7 +94,49 @@
 
 {% block javascripts %}
 	<script>
-		let cart = [];
+let cart = [];
+
+
+const sendCart = async () => {
+    try {
+        // Realiza la solicitud usando fetch y await
+const response = await fetch('http://127.0.0.1:8000/order/', {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest' // Opcional: para identificar la solicitud como AJAX
+            },
+            body: JSON.stringify({
+                name: 'pepe'
+            })
+        });
+
+        // Verifica si la respuesta es exitosa
+        if (!response.ok) {
+			console.log(response)
+          //  throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parsear la respuesta a JSON
+        const data = await response.json();
+
+
+        // Maneja la respuesta
+        if (data.error) {
+           alert('Error: ' + data.error);
+        } else {
+            //alert('Order created successfully! Order ID: ' + data.order_id);
+        }
+    } catch (error) {
+        // Manejo de errores
+        //console.error('Error:', error);
+      //  alert('An error occurred while processing your request.');
+    }
+};
+
+
+		
 
 		document.querySelectorAll('.add-to-cart').forEach(button => {
 		button.addEventListener('click', function (e) {
@@ -94,7 +147,7 @@
 		return; // No hacer nada si la cantidad es 0
 		}
 
-		console.log(e)
+		//console.log(e)
 		let productClasses = e.target.classList;
 		//console.log('product classes ' + productClasses)
 		//let productId = productClasses.value.slice(productClasses.value.indexOf('id'));

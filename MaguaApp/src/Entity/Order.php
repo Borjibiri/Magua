@@ -11,11 +11,9 @@ use Doctrine\ORM\Mapping\OneToMany;
 #[ORM\Table(name: '`order`')]
 class Order
 {
-  //  #[ManyToMany(targetEntity: "Product", inversedBy: "orders")]
-    
-//#[JoinTable(name: "order_product")]
+
     #[OneToMany(targetEntity: "OrderProduct", mappedBy: "order")]
-    private $product;
+    private $OrderProducts;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -26,6 +24,9 @@ class Order
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $total_amount = null;
+
+    #[ORM\ManyToOne(inversedBy: 'user')]
+    private ?User $user_id = null;
 
     public function getId(): ?int
     {
@@ -52,6 +53,18 @@ class Order
     public function setTotalAmount(?string $total_amount): static
     {
         $this->total_amount = $total_amount;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): static
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

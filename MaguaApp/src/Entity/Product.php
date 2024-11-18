@@ -6,13 +6,19 @@ use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\DecimalType;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
     //#[ManyToMany(targetEntity: "Order", mappedBy:"products")]
     #[OneToMany(targetEntity: "OrderProduct", mappedBy: "product")]
-    private $order;
+    private $orderProducts;
+
+    public function __construct()
+    {
+        $this->orderProducts = new ArrayCollection();
+    }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
