@@ -30,10 +30,8 @@
 {% endblock %}
 
 {% block body %}
-	<div
-		class="main-content">
+	<div class="main-content">
 
-		<!-- Product List -->
 		<div class="product-container">
 			{% for product in products %}
 				<div class="product-card bg-blue-800">
@@ -48,7 +46,6 @@
 						</div>
 						<div>
 							<select class="quantity-select">
-								<option value="0">0</option>
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -60,7 +57,7 @@
 								<option value="9">9</option>
 								<option value="10">10</option>
 							</select>
-							<button class="add-to-cart productId-{{ product.id }}">Add to Cart</button>
+							<button class="add-to-cart productId-{{ product.id }}" id="{{ product.id }}">Add to Cart</button>
 						</div>
 					</div>
 				</div>
@@ -72,10 +69,8 @@
 			<h3>YOUR CART</h3>
 			<p>Items: 0</p>
 			<p>Total: 0 Euros</p>
+			<div id="cart-items-list"></div>
 
-			<div
-				id="cart-items-list"><!-- Cart items will be displayed here -->
-			</div>
 
 			<button>Proceed to Checkout</button>
 		</div>
@@ -90,90 +85,87 @@
 	<script>
 		let cart = [];
 
-document.querySelectorAll('.add-to-cart').forEach(button => {
-button.addEventListener('click', function (e) {
-const quantity = parseInt(this.previousElementSibling.value);
+		document.querySelectorAll('.add-to-cart').forEach(button => {
+		button.addEventListener('click', function (e) {
+		const quantity = parseInt(this.previousElementSibling.value);
+		// Verificar si la cantidad es 0
+		if (quantity === 0) {
+		alert('You cannot add 0 quantity to the cart.');
+		return; // No hacer nada si la cantidad es 0
+		}
 
-// Verificar si la cantidad es 0
-if (quantity === 0) {
-alert('You cannot add 0 quantity to the cart.');
-return; // No hacer nada si la cantidad es 0
-}
+		console.log(e)
+		let productClasses = e.target.classList;
+		//console.log('product classes ' + productClasses)
+		//let productId = productClasses.value.slice(productClasses.value.indexOf('id'));
+		let productId = e.target.id
+		//console.log('productId ' + productId)
+		let priceSpan = document.querySelector (`.product_${productId}_price`).innerText;
 
-let productClasses = e.target.classList;
-let productId = productClasses.value.slice(productClasses.value.indexOf('id'));
-let priceSpan = document.querySelector (`.product_${productId}_price`).innerText;
+		const productName = this.closest('.product-card').querySelector('h5').innerText;
+		const price = parseFloat(priceSpan);
 
-const productName = this.closest('.product-card').querySelector('h5').innerText;
-const price = parseFloat(priceSpan);
+		const product = {
+		id: productId,
+		name: productName,
+		quantity: quantity,
+		price: price,
+		total: price * quantity
+		};
 
-const product = {
-id: productId,
-name: productName,
-quantity: quantity,
-price: price,
-total: price * quantity
-};
+		// Add product to cart
+		cart.push(product);
+		updateCart();
+		});
+		});
 
-// Add product to cart
-cart.push(product);
-updateCart();
-});
-});
 
-// Function to update cart items
-function updateCart() {
-let totalItems = 0;
-let totalAmount = 0;
-let cartItemsHTML = '';
 
-// Clear the cart items list
-document.getElementById('cart-items-list').innerHTML = '';
 
-// Iterate over cart items
-cart.forEach((item, index) => {
-totalItems += item.quantity;
-totalAmount += item.total;
+		// Function to update cart items
+		function updateCart() {
+		let totalItems = 0;
+		let totalAmount = 0;
+		let cartItemsHTML = '';
 
-// Add item to cart list
-cartItemsHTML += `
-					<div class="cart-item" id="cart-item-${
-item.id
-}">
-						<span>${
-item.name
-} (x${
-item.quantity
-}) - ${
-item.total.toFixed(2)
-} Euros</span>
-						<button class="remove-from-cart" style="color: white; font-size: 20px; background-color: red; border: 2px solid red; border-radius: 50%; padding: 10px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;"
-       data-index="${index}">
-    🗑️
-</button>
+		// Clear the cart items list
+		let p = document.getElementById('cart-items-list').innerHTML = '';
 
-					</div>
-				`;
-});
+		// Iterate over cart items
+		cart.forEach((item, index) => {
+		totalItems += item.quantity;
+		totalAmount += item.total;
 
-// Update the cart HTML with the new items
-document.getElementById('cart-items-list').innerHTML = cartItemsHTML;
+		// Add item to cart list
+		cartItemsHTML += `
+		<div class="cart-item" id="cart-item-${item.id}">
+		<span>${item.name} (x${item.quantity}) - ${item.total.toFixed(2)} Euros</span>
+		<button class="remove-from-cart" style="color: white; font-size: 20px; background-color: red; border: 2px solid red; border-radius: 50%; padding: 10px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;" data-index="${index}">
+			🗑️
+		</button>
 
-// Update the total and item count
-document.querySelector('.cart p:nth-of-type(1)').innerText = `Items: ${totalItems}`;
-document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
-totalAmount.toFixed(2)
-} Euros`;
+		</div>`;
+		});
 
-// Add event listeners to the remove buttons
-document.querySelectorAll('.remove-from-cart').forEach(button => {
-button.addEventListener('click', function () {
-const index = parseInt(this.getAttribute('data-index'));
-cart.splice(index, 1); // Remove the item from the cart
-updateCart(); // Update the cart display
-});
-});
-}
+		// Update the cart HTML with the new items
+		let updatedList = document.getElementById('cart-items-list').innerHTML = cartItemsHTML;
+	
+
+		// Update the total and item count
+		document.querySelector('.cart p:nth-of-type(1)').innerText = `Items: ${totalItems}`;
+		document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
+		totalAmount.toFixed(2)
+		} Euros`;
+
+		// Add event listeners to the remove buttons
+		document.querySelectorAll('.remove-from-cart').forEach(button => {
+		button.addEventListener('click', function () {
+		const index = parseInt(this.getAttribute('data-index'));
+		cart.splice(index, 1); // Remove the item from the cart
+		updateCart(); // Update the cart display
+		});
+		});
+		}
 	</script>
 {% endblock %}
 
