@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\OrderProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Order;
+use App\Entity\Product;
+
 
 #[ORM\Entity(repositoryClass: OrderProductRepository::class)]
 class OrderProduct
@@ -13,16 +16,17 @@ class OrderProduct
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Order')]
+    #[ORM\ManyToOne(targetEntity: Order::class)]
     #[ORM\JoinColumn(name: 'order_id', referencedColumnName: 'id', nullable: false)]
-    private $order;
+    private ?Order $order = null;
     
-    #[ORM\ManyToOne(targetEntity: 'Product')]
+    #[ORM\ManyToOne(targetEntity: Product::class)]
     #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false)]
-    private $product;
+    private ?Product $product = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $quantity = null;
+    
 
     public function getId(): ?int
     {
@@ -38,6 +42,17 @@ class OrderProduct
     {
         $this->quantity = $quantity;
 
+        return $this;
+    }
+    public function setOrder(Order $order): static
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    public function setProduct(Product $product): static
+    {   
+        $this->product = $product;
         return $this;
     }
 }

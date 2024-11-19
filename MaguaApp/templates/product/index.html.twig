@@ -101,7 +101,6 @@ let cart = [];
 const sendCart = async () => {
     try {
         // Realiza la solicitud usando fetch y await
-		console.log("en el fetch");
 		const response = await fetch('http://127.0.0.1:8000/order/', {
             method: 'POST',
             headers: {
@@ -109,14 +108,14 @@ const sendCart = async () => {
                 'X-Requested-With': 'XMLHttpRequest' // Opcional: para identificar la solicitud como AJAX
             },
             body: JSON.stringify({
-                name: 'pepe'
+                cart: cart
             })
         });
 
         // Verifica si la respuesta es exitosa
         if (!response.ok) {
 			console.log(response)
-          //  throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         // Parsear la respuesta a JSON
@@ -127,12 +126,12 @@ const sendCart = async () => {
         if (data.error) {
            alert('Error: ' + data.error);
         } else {
-            //alert('Order created successfully! Order ID: ' + data.order_id);
+            alert('Order created successfully! Order ID: ' + data.order_id);
         }
     } catch (error) {
         // Manejo de errores
         //console.error('Error:', error);
-      //  alert('An error occurred while processing your request.');
+      	alert('An error occurred while processing your request.');
     }
 };
 
@@ -203,11 +202,11 @@ const sendCart = async () => {
 		// Add item to cart list
 		cartItemsHTML += `
 		<div class="cart-item" id="cart-item-${item.id}">
-		<span>${item.name} (x${item.quantity}) - ${item.total.toFixed(2)} Euros</span>
+		<span> (x${item.quantity}) - ${item.name} - ${item.total.toFixed(2)} Euros</span>
 		<button class="remove-from-cart" style="color: white; font-size: 20px; background-color: red; border: 2px solid red; border-radius: 50%; padding: 10px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;" data-index="${index}">
 			🗑️
 		</button>
-		
+
 
 		</div>`;
 		});

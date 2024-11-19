@@ -25,8 +25,12 @@ class Order
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $total_amount = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $date_created = null;
+
     #[ORM\ManyToOne(inversedBy: 'user')]
     private ?User $user_id = null;
+
 
     public function getId(): ?int
     {
@@ -65,6 +69,18 @@ class Order
     public function setUserId(?User $user_id): static
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getDateCreated(): ?\DateTime
+    {
+        return $this->date_created;
+    }
+
+    public function setDateCreated(?\DateTime $dateCreated): static
+    {
+        $this->date_created = $dateCreated;
 
         return $this;
     }
