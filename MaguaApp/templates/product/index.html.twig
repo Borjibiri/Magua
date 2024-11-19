@@ -97,11 +97,12 @@
 let cart = [];
 
 
+
 const sendCart = async () => {
     try {
         // Realiza la solicitud usando fetch y await
-const response = await fetch('http://127.0.0.1:8000/order/', {
-
+		console.log("en el fetch");
+		const response = await fetch('http://127.0.0.1:8000/order/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -135,29 +136,16 @@ const response = await fetch('http://127.0.0.1:8000/order/', {
     }
 };
 
-
-		
-
 		document.querySelectorAll('.add-to-cart').forEach(button => {
 		button.addEventListener('click', function (e) {
-		const quantity = parseInt(this.previousElementSibling.value);
-		// Verificar si la cantidad es 0
-		if (quantity === 0) {
-		alert('You cannot add 0 quantity to the cart.');
-		return; // No hacer nada si la cantidad es 0
-		}
-
-		//console.log(e)
-		let productClasses = e.target.classList;
-		//console.log('product classes ' + productClasses)
-		//let productId = productClasses.value.slice(productClasses.value.indexOf('id'));
+	
 		let productId = e.target.id
-		//console.log('productId ' + productId)
 		let priceSpan = document.querySelector (`.product_${productId}_price`).innerText;
-
+		
 		const productName = this.closest('.product-card').querySelector('h5').innerText;
 		const price = parseFloat(priceSpan);
-
+		const quantity = parseInt(this.previousElementSibling.value);
+		
 		const product = {
 		id: productId,
 		name: productName,
@@ -167,13 +155,35 @@ const response = await fetch('http://127.0.0.1:8000/order/', {
 		};
 
 		// Add product to cart
-		cart.push(product);
+		let existInCart = cart.some( prod => {
+			if (prod.id === product.id) {
+				return true
+			}	else {
+				return false
+			}
+		}) 
+
+		if (existInCart === false) {
+			cart.push(product);
+		} else {
+			cart = cart.map((prod) => {
+				if(prod.id === product.id ){
+					return {
+						id: prod.id,
+						name: prod.name,
+						quantity: prod.quantity + product.quantity,
+						price: prod.price,
+						total: prod.price * (prod.quantity += product.quantity)
+					}
+				} else {
+					return prod
+				}
+			})
+		}	
+
 		updateCart();
 		});
 		});
-
-
-
 
 		// Function to update cart items
 		function updateCart() {
@@ -186,7 +196,8 @@ const response = await fetch('http://127.0.0.1:8000/order/', {
 
 		// Iterate over cart items
 		cart.forEach((item, index) => {
-		totalItems += item.quantity;
+		
+		totalItems = item.quantity;
 		totalAmount += item.total;
 
 		// Add item to cart list
@@ -196,6 +207,7 @@ const response = await fetch('http://127.0.0.1:8000/order/', {
 		<button class="remove-from-cart" style="color: white; font-size: 20px; background-color: red; border: 2px solid red; border-radius: 50%; padding: 10px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;" data-index="${index}">
 			🗑️
 		</button>
+		
 
 		</div>`;
 		});

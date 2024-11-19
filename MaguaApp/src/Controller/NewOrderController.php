@@ -19,7 +19,6 @@ class NewOrderController extends AbstractController
     #[Route("/", name: "payment_page", methods: ["POST", "GET"])]
     public function index(Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
     {
-        dd($request->getMethod());
         // dd($request);
         $data = json_decode($request->getContent(), true);
 
