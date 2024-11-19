@@ -15,8 +15,17 @@ use App\Entity\Order;
 use App\Entity\OrderProduct;
 
 #[Route('/order')]
+
 class NewOrderController extends AbstractController
 {
+
+    #[Route('/', name: 'my_payment', methods: ['GET'])]
+    public function goingPayment(): Response
+    {
+        return $this->render('payment/payment.html.twig', [
+            
+        ]);
+    }
     
     #[Route("/", name: "payment_page", methods: ["POST", "GET"])]
     public function index(Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
@@ -56,6 +65,7 @@ class NewOrderController extends AbstractController
         
 
         $entityManager->flush();
+        $user->addUser();
 
         return $this->json([
             'message' => 'Order created successfully',

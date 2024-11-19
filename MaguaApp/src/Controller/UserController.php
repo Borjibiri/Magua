@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Order;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -52,16 +53,17 @@ class UserController extends AbstractController
     }
 
     #[Route('/dashboard_user', name: 'app_main')]
-    public function showDasboard(ProductRepository $productRepository, ): Response
+    public function showDasboard(ProductRepository $productRepository, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+        $userOrders = $entityManager->getRepository(Order::class)->findBy(['user_id'=> $user->getId()]);
         // $products = $productRepository->findAll();
         return $this->render('dashboard_user/main.html.twig', [
             // 'products' => $products,
             'user' => $user,
         ]);
     }
-
+ 
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response

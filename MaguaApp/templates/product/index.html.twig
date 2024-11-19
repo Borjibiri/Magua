@@ -72,21 +72,24 @@
 			<div id="cart-items-list"></div>
 
 
-{# <button>
-<a href="{{ path ('payment_page') }}">
-		Proceed to Checkout</a>
-</button> #}
+			{# <button>
+			<a href="{{ path ('payment_page') }}">
+					Proceed to Checkout</a>
+			</button> #}
 
-<button onClick=sendCart()>
-		Proceed to Checkout</a>
-</button>
-
-
+			<button onclick="sendCart()">
+			
+				Proceed to Checkout
+			</button>
 
 
 		</div>
 	</div>
 
+	
+{% endblock %}
+
+{% block footer %}
 	<button class="back-button">
 		<a href="{{ path ('app_main') }}">Back to profile</a>
 	</button>
@@ -94,142 +97,159 @@
 
 {% block javascripts %}
 	<script>
-let cart = [];
-
+		let cart = [];
 
 
 const sendCart = async () => {
-    try {
-        // Realiza la solicitud usando fetch y await
-		const response = await fetch('http://127.0.0.1:8000/order/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest' // Opcional: para identificar la solicitud como AJAX
-            },
-            body: JSON.stringify({
-                cart: cart
-            })
-        });
+try { // Realiza la solicitud usando fetch y await
+const response = await fetch('http://127.0.0.1:8000/order/', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'X-Requested-With': 'XMLHttpRequest' // Opcional: para identificar la solicitud como AJAX
+},
+body: JSON.stringify(
+{cart: cart}
+)
+});
 
-        // Verifica si la respuesta es exitosa
-        if (!response.ok) {
-			console.log(response)
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+// Verifica si la respuesta es exitosa
 
-        // Parsear la respuesta a JSON
-        const data = await response.json();
+if (! response.ok) {
+throw new Error (`HTTP error! Status: ${
+response.status
+}`);
+} else {
+
+const routePaymentUrl = "{{ path ('my_payment') }}";
+
+	console.log(routePaymentUrl)
+
+	window.location.href = routePaymentUrl;
 
 
-        // Maneja la respuesta
-        if (data.error) {
-           alert('Error: ' + data.error);
-        } else {
-            alert('Order created successfully! Order ID: ' + data.order_id);
-        }
-    } catch (error) {
-        // Manejo de errores
-        //console.error('Error:', error);
-      	alert('An error occurred while processing your request.');
-    }
+
+}
+	
+
+// Parsear la respuesta a JSON
+const data = await response.json();
+
+
+// Maneja la respuesta
+if (data.error) {
+alert('Error: ' + data.error);
+} else {
+alert('Order created successfully! Order ID: ' + data.order_id);
+}
+} catch (error) {
+// Manejo de errores
+// console.error('Error:', error);
+alert('An error occurred while processing your request.');
+}
 };
 
-		document.querySelectorAll('.add-to-cart').forEach(button => {
-		button.addEventListener('click', function (e) {
-	
-		let productId = e.target.id
-		let priceSpan = document.querySelector (`.product_${productId}_price`).innerText;
-		
-		const productName = this.closest('.product-card').querySelector('h5').innerText;
-		const price = parseFloat(priceSpan);
-		const quantity = parseInt(this.previousElementSibling.value);
-		
-		const product = {
-		id: productId,
-		name: productName,
-		quantity: quantity,
-		price: price,
-		total: price * quantity
-		};
+document.querySelectorAll('.add-to-cart').forEach(button => {
+button.addEventListener('click', function (e) {
 
-		// Add product to cart
-		let existInCart = cart.some( prod => {
-			if (prod.id === product.id) {
-				return true
-			}	else {
-				return false
-			}
-		}) 
+let productId = e.target.id
+let priceSpan = document.querySelector (`.product_${productId}_price`).innerText;
 
-		if (existInCart === false) {
-			cart.push(product);
-		} else {
-			cart = cart.map((prod) => {
-				if(prod.id === product.id ){
-					return {
-						id: prod.id,
-						name: prod.name,
-						quantity: prod.quantity + product.quantity,
-						price: prod.price,
-						total: prod.price * (prod.quantity += product.quantity)
-					}
-				} else {
-					return prod
-				}
-			})
-		}	
+const productName = this.closest('.product-card').querySelector('h5').innerText;
+const price = parseFloat(priceSpan);
+const quantity = parseInt(this.previousElementSibling.value);
 
-		updateCart();
-		});
-		});
+const product = {
+id: productId,
+name: productName,
+quantity: quantity,
+price: price,
+total: price * quantity
+};
 
-		// Function to update cart items
-		function updateCart() {
-		let totalItems = 0;
-		let totalAmount = 0;
-		let cartItemsHTML = '';
+// Add product to cart
+let existInCart = cart.some(prod => {
+if (prod.id === product.id) {
+return true
+} else {
+return false
+}
+})
 
-		// Clear the cart items list
-		let p = document.getElementById('cart-items-list').innerHTML = '';
+if (existInCart === false) {
+cart.push(product);
+} else {
+cart = cart.map((prod) => {
+if (prod.id === product.id) {
+return {
+id: prod.id,
+name: prod.name,
+quantity: prod.quantity + product.quantity,
+price: prod.price,
+total: prod.price * (prod.quantity += product.quantity)
+}
+} else {
+return prod
+}
+})
+} updateCart();
+});
+});
 
-		// Iterate over cart items
-		cart.forEach((item, index) => {
-		
-		totalItems = item.quantity;
-		totalAmount += item.total;
+// Function to update cart items
+function updateCart() {
+let totalItems = 0;
+let totalAmount = 0;
+let cartItemsHTML = '';
 
-		// Add item to cart list
-		cartItemsHTML += `
-		<div class="cart-item" id="cart-item-${item.id}">
-		<span> (x${item.quantity}) - ${item.name} - ${item.total.toFixed(2)} Euros</span>
+// Clear the cart items list
+let p = document.getElementById('cart-items-list').innerHTML = '';
+
+// Iterate over cart items
+cart.forEach((item, index) => {
+
+totalItems = item.quantity;
+totalAmount += item.total;
+
+// Add item to cart list
+cartItemsHTML += `
+		<div class="cart-item" id="cart-item-${
+item.id
+}">
+		<span> (x${
+item.quantity
+}) - ${
+item.name
+} - ${
+item.total.toFixed(2)
+} Euros</span>
 		<button class="remove-from-cart" style="color: white; font-size: 20px; background-color: red; border: 2px solid red; border-radius: 50%; padding: 10px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;" data-index="${index}">
 			🗑️
 		</button>
 
 
 		</div>`;
-		});
+});
 
-		// Update the cart HTML with the new items
-		let updatedList = document.getElementById('cart-items-list').innerHTML = cartItemsHTML;
-	
+// Update the cart HTML with the new items
+let updatedList = document.getElementById('cart-items-list').innerHTML = cartItemsHTML;
 
-		// Update the total and item count
-		document.querySelector('.cart p:nth-of-type(1)').innerText = `Items: ${totalItems}`;
-		document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
-		totalAmount.toFixed(2)
-		} Euros`;
 
-		// Add event listeners to the remove buttons
-		document.querySelectorAll('.remove-from-cart').forEach(button => {
-		button.addEventListener('click', function () {
-		const index = parseInt(this.getAttribute('data-index'));
-		cart.splice(index, 1); // Remove the item from the cart
-		updateCart(); // Update the cart display
-		});
-		});
-		}
+// Update the total and item count
+document.querySelector('.cart p:nth-of-type(1)').innerText = `Items: ${totalItems}`;
+document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
+totalAmount.toFixed(2)
+} Euros`;
+
+// Add event listeners to the remove buttons
+document.querySelectorAll('.remove-from-cart').forEach(button => {
+button.addEventListener('click', function () {
+const index = parseInt(this.getAttribute('data-index'));
+cart.splice(index, 1); // Remove the item from the cart
+updateCart(); // Update the cart display
+});
+});
+}
 	</script>
 {% endblock %}
 
