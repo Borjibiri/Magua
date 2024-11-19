@@ -58,9 +58,11 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $userOrders = $entityManager->getRepository(Order::class)->findBy(['user_id'=> $user->getId()]);
         // $products = $productRepository->findAll();
+        //dd($userOrders);
         return $this->render('dashboard_user/main.html.twig', [
             // 'products' => $products,
             'user' => $user,
+            'orders' => $userOrders,
         ]);
     }
  
