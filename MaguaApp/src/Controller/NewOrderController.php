@@ -44,7 +44,12 @@ class NewOrderController extends AbstractController
 
         $order = new Order();
         $order->setUserId($user);
-        $order->setTotalAmount(5);
+        $totalCart = 0;
+         foreach($data['cart'] as $singleProduct){
+            $totalCart += $singleProduct['total'];
+         }
+
+        $order->setTotalAmount($totalCart);
 
         //$order->setTotalAmount($data['cart']);
         $order->setDateCreated(new \DateTime());
@@ -53,11 +58,10 @@ class NewOrderController extends AbstractController
         $entityManager->flush();
         foreach ($data['cart'] as $productData) {
             $product = $productRepository->find(    $productData["id"]);
-            
             if ($product) {
                 $orderProduct = new OrderProduct();
                 $orderProduct->setOrder($order);
-                $orderProduct->setProduct($product);
+                $orderProduct->setProduct(product: $product);
                 $orderProduct->setQuantity( $productData["quantity"]);
                 $entityManager->persist($orderProduct);
             }

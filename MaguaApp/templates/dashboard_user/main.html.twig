@@ -6,64 +6,79 @@
 		{% block title %}
 			<title>User Page</title>
 		{% endblock %}
+		{{ encore_entry_link_tags('app') }}
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+		{% endblock %}
 	</head>
+
+	<body class="bg-gray-100 font-sans flex flex-col min-h-screen">
+		{% block header %}
+			<header class="bg-[#63c3db] shadow-md p-4">
+				<div
+					class="flex items-center justify-between">
+					<!-- Aumentamos el tamaño del h1 -->
+					<h1 class="text-2xl font-semibold text-[#ffebeb]">
+						Welcome,
+						{{ user.name }}
+					</h1>
+					<nav>
+						<ul
+							class="flex items-center space-x-6">
+							<!-- Menú con más separación y movido a la izquierda -->
+							<li>
+								<a href="{{ path('app_product_index') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+									Make an order
+								</a>
+							</li>
+							<li>
+								<a href="{{ path('app_logout') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+									Log out
+								</a>
+							</li>
+							<li>
+								<a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+									About Us
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</header>
+		{% endblock %}
+
+		{% block body %}
+			<main
+				class="flex-grow bg-white py-8 px-4">
+
+				<!-- Tabla de pedidos con efecto hover -->
+				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+					{% for order in orders %}
+						<div
+							class="border rounded-lg p-4 shadow-md bg-white transition-transform duration-300 hover:scale-105">
+							<!-- Efecto hover -->
+							<p class="font-semibold text-lg text-gray-700">Order #{{ order.id }}</p>
+							<p class="text-gray-600">Status:
+								{{ order.status }}</p>
+							<p class="text-gray-600">Total:
+								{{ order.getTotalAmount }}
+								Euros</p>
+						</div>
+					{% endfor %}
+				</div>
+			</main>
+		{% endblock %}
+
+		{% block footer %}
+			<footer
+				class="bg-blue-500 text-white text-center py-6 mt-auto">
+				<!-- Footer con mayor altura -->
+				<button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+					<a href="{{ path('app_main') }}">BACK</a>
+				</button>
+			</footer>
+		{% endblock %}
+
+	</body>
 </html>
 
-{% block stylesheets %}
-	{{ encore_entry_link_tags('app') }}
-	<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-{% endblock %}
-
-{% block header %}
-	<header class="bg-gray-100 shadow-md p-4">
-		<h1 class="text-lg font-bold text-gray-700">Welcome
-			{{ user.name }}</h1>
-		<nav>
-			<ul class="flex items-center justify-between">
-
-				<li>
-					<a href="{{ path('app_product_index') }}" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600 transition">Make an order</a>
-				</li>
-				<li>
-					<a href="{{ path('app_logout') }}" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600 transition">Log out</a>
-				</li>
-				<li>
-					<a href="#" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600 transition">About Us</a>
-				</li>
-			</ul>
-		</nav>
-	</header>
-{% endblock %}
-
-{% block body %}
-
-	<h5>{{ user.name }}</h5>
-<div class="flex-wrap w-full" style="height: 100vh; flex-wrap: wrap; display:flex;">
-
-
-		{% for order in orders %}
-			<div class="" style="width: 200px; height: 10vh;  border: 1px black solid;">
-				{# <a href="#">
-							<img src="https://www.elajonegroherbolarios.com/images/productos/11179/ajonegro2zKcr.jpg" alt="Imagen del producto"/>
-						</a> #}
-				<p>Número de Pedido: {{ order.id }}</p>
-				<p>Estado: {{ order.status }} </p>
-				<p>Total: {{ order.getTotalAmount }} Euros</p>
-				{# <span>{{ order.getDateCreated}}</span> #}
-
-
-				{# <span>{{ order.date_created }}</span> #}
-			</div>
-		{% endfor %}
-	</div>
-
-
-{% endblock %}
-
-{% block footer %}
-	<div>
-		<button class="back-button">
-			<a href="{{ path ('app_main') }}">BACK</a>
-		</button>
-	</div>
-{% endblock %}
