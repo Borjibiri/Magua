@@ -15,37 +15,41 @@
 {% endblock %}
 
 {% block header %}
-	<header class="bg-gray-100 shadow-md p-4">
-		<h1 class="text-lg font-bold text-gray-700">Welcome to your order</h1>
-		<nav>
-			<ul class="flex items-center justify-between">
-				<li>
-					<a href="{{ path('app_logout') }}" class="logout-button">
-						Log out
-					</a>
-				</li>
-			</ul>
-		</nav>
+	<header class="bg-blue-600 shadow-md p-6">
+		<div class="flex items-center justify-between">
+			<h1 class="text-2xl font-semibold text-white">Welcome to your Order</h1>
+			<nav>
+				<ul class="flex items-center space-x-6">
+					<li>
+						<a href="{{ path('app_logout') }}" class="logout-button text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md transition">Log out</a>
+					</li>
+					<li>
+						<a href="{{ path('app_main') }}" class="logout-button text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md transition">Back to profile</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 {% endblock %}
 
 {% block body %}
-	<div class="main-content">
-
-		<div class="product-container">
+	<div
+		class="main-content flex justify-between gap-8 p-8">
+		<!-- Product Section -->
+		<div class="product-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-3/4">
 			{% for product in products %}
-				<div class="product-card bg-blue-800">
-					<a href="#">
-						<img src="https://www.elajonegroherbolarios.com/images/productos/11179/ajonegro2zKcr.jpg" alt="Imagen del producto"/>
+				<div class="product-card bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
+					<a href="#" class="block">
+						<img class="w-full h-48 object-cover" src="https://www.elajonegroherbolarios.com/images/productos/11179/ajonegro2zKcr.jpg" alt="Imagen del producto"/>
 					</a>
-					<div class="product-footer">
-						<h5>{{ product.name }}</h5>
-						<p>{{ product.description }}</p>
-						<div>
-							<span class='product_{{ product.id }}_price'>{{ product.price }}</span>
+					<div class="product-footer p-4">
+						<h5 class="text-xl font-semibold mb-2">{{ product.name }}</h5>
+						<p class="text-gray-600 text-sm mb-4">{{ product.description }}</p>
+						<div class="mb-4">
+							<span class="text-lg font-semibold text-gray-800 product_{{ product.id }}_price">{{ product.price }}€</span>
 						</div>
-						<div>
-							<select class="quantity-select">
+						<div class="flex items-center justify-between">
+							<select class="quantity-select border border-gray-300 rounded-md px-2 py-1 text-sm">
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -57,7 +61,7 @@
 								<option value="9">9</option>
 								<option value="10">10</option>
 							</select>
-							<button class="add-to-cart productId-{{ product.id }}" id="{{ product.id }}">Add to Cart</button>
+							<button class="add-to-cart bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition" id="{{ product.id }}">Add to Cart</button>
 						</div>
 					</div>
 				</div>
@@ -65,94 +69,65 @@
 		</div>
 
 		<!-- Cart Section -->
-		<div class="cart">
-			<h3>YOUR CART</h3>
-			<p>Items: 0</p>
-			<p>Total: 0 Euros</p>
+		<div class="cart bg-gray-100 p-6 rounded-lg shadow-lg w-1/4">
+			<h3 class="text-xl font-semibold mb-4">Your Cart</h3>
+			<p class="text-gray-700 mb-4">Items: 0</p>
+			<p class="text-gray-700 mb-4">Total: 0 €</p>
 			<div id="cart-items-list"></div>
-
-
-			{# <button>
-			<a href="{{ path ('payment_page') }}">
-					Proceed to Checkout</a>
-			</button> #}
-
-			<button onclick="sendCart()">
-			
+			<button onclick="sendCart()" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition w-full">
 				Proceed to Checkout
 			</button>
-
-
 		</div>
 	</div>
-
-	
 {% endblock %}
 
 {% block footer %}
-	<button class="back-button">
-		<a href="{{ path ('app_main') }}">Back to profile</a>
-	</button>
+			<footer class="bg-blue-500 text-right text-white text-base font-normal font-['Sora'] py-4 mt-auto">
+				Magua© 2024
+			</footer>
 {% endblock %}
 
 {% block javascripts %}
 	<script>
 		let cart = [];
 
-
 const sendCart = async () => {
-try { // Realiza la solicitud usando fetch y await
+try {
 const response = await fetch('http://127.0.0.1:8000/order/', {
 method: 'POST',
 headers: {
 'Content-Type': 'application/json',
-'X-Requested-With': 'XMLHttpRequest' // Opcional: para identificar la solicitud como AJAX
+'X-Requested-With': 'XMLHttpRequest'
 },
 body: JSON.stringify(
 {cart: cart}
 )
 });
 
-// Verifica si la respuesta es exitosa
-
 if (! response.ok) {
 throw new Error (`HTTP error! Status: ${
 response.status
 }`);
 } else {
-
-const routePaymentUrl = "{{ path ('my_payment') }}";
-
-	console.log(routePaymentUrl)
-
-	window.location.href = routePaymentUrl;
-
-
-
+const routePaymentUrl = "{{ path('my_payment') }}";
+console.log(routePaymentUrl);
+window.location.href = routePaymentUrl;
 }
-	
 
-// Parsear la respuesta a JSON
 const data = await response.json();
-
-
-// Maneja la respuesta
 if (data.error) {
 alert('Error: ' + data.error);
 } else {
 alert('Order created successfully! Order ID: ' + data.order_id);
 }
 } catch (error) {
-// Manejo de errores
-// console.error('Error:', error);
 alert('An error occurred while processing your request.');
 }
 };
 
 document.querySelectorAll('.add-to-cart').forEach(button => {
 button.addEventListener('click', function (e) {
-
-let productId = e.target.id
+let productId = e.target.id;
 let priceSpan = document.querySelector (`.product_${productId}_price`).innerText;
 
 const productName = this.closest('.product-card').querySelector('h5').innerText;
@@ -167,245 +142,73 @@ price: price,
 total: price * quantity
 };
 
-// Add product to cart
-let existInCart = cart.some(prod => {
-if (prod.id === product.id) {
-return true
-} else {
-return false
-}
-})
-
-if (existInCart === false) {
+let existInCart = cart.some(prod => prod.id === product.id);
+if (! existInCart) {
 cart.push(product);
 } else {
-cart = cart.map((prod) => {
-if (prod.id === product.id) {
-return {
-id: prod.id,
-name: prod.name,
+cart = cart.map((prod) => prod.id === product.id ? {
+...prod,
 quantity: prod.quantity + product.quantity,
-price: prod.price,
-total: prod.price * (prod.quantity += product.quantity)
-}
-} else {
-return prod
-}
-})
+total: prod.price * (prod.quantity + product.quantity)
+} : prod);
 } updateCart();
 });
 });
 
-// Function to update cart items
 function updateCart() {
 let totalItems = 0;
 let totalAmount = 0;
 let cartItemsHTML = '';
 
-// Clear the cart items list
-let p = document.getElementById('cart-items-list').innerHTML = '';
+let cartItems = document.getElementById('cart-items-list');
+cartItems.innerHTML = ''; // Clear cart items list
 
-// Iterate over cart items
 cart.forEach((item, index) => {
-
-totalItems = item.quantity;
+totalItems += item.quantity;
 totalAmount += item.total;
 
-// Add item to cart list
 cartItemsHTML += `
-		<div class="cart-item" id="cart-item-${
+					<div class="cart-item flex justify-between items-center mb-4" id="cart-item-${
 item.id
 }">
-		<span> (x${
+						<span class="text-gray-700 text-sm">(x${
 item.quantity
 }) - ${
 item.name
 } - ${
 item.total.toFixed(2)
-} Euros</span>
-		<button class="remove-from-cart" style="color: white; font-size: 20px; background-color: red; border: 2px solid red; border-radius: 50%; padding: 10px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;" data-index="${index}">
-			🗑️
-		</button>
-
-
-		</div>`;
+} €</span>
+						<button class="remove-from-cart text-red-500 text-xl" style="cursor: pointer;" data-index="${index}">🗑️</button>
+					</div>`;
 });
 
-// Update the cart HTML with the new items
-let updatedList = document.getElementById('cart-items-list').innerHTML = cartItemsHTML;
-
-
-// Update the total and item count
+cartItems.innerHTML = cartItemsHTML;
 document.querySelector('.cart p:nth-of-type(1)').innerText = `Items: ${totalItems}`;
 document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
 totalAmount.toFixed(2)
-} Euros`;
+} €`;
 
-// Add event listeners to the remove buttons
 document.querySelectorAll('.remove-from-cart').forEach(button => {
 button.addEventListener('click', function () {
 const index = parseInt(this.getAttribute('data-index'));
-cart.splice(index, 1); // Remove the item from the cart
-updateCart(); // Update the cart display
+cart.splice(index, 1); // Remove item from cart
+updateCart(); // Update the cart
 });
 });
 }
 	</script>
 {% endblock %}
 
-
 <style>
-
-	.main-content {
-		display: flex;
-		justify-content: space-between;
-		padding: 20px;
-	}
-
-	.logout-button {
-		display: block;
-		margin: 20px auto;
-		padding: 10px 20px;
-		background-color: #007BFF;
-		color: white;
-		border: none;
-		border-radius: 4px;
-		cursor: pointer;
-	}
-
-	.logout-button:hover {
-		background-color: #0056b3;
-	}
-
-	.back-button a {
-		color: white;
-		text-decoration: none;
-	}
-
-	.back-button:hover {
-		background-color: #0056b3;
-	}
-
-
-	.product-container {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		gap: 20px;
-		width: 70%;
-	}
-
-
-	.product-card {
-		border: 1px solid #ddd;
-		border-radius: 8px;
-		overflow: hidden;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		background-color: #fff;
-	}
-
-	.product-card img {
-		width: 100%;
-		height: auto;
-		border-bottom: 1px solid #ddd;
-	}
-
-	.product-footer {
-		padding: 15px;
-	}
-
-	.product-footer h5 {
-		font-size: 18px;
-		margin-bottom: 10px;
-	}
-
-	.product-footer p {
-		font-size: 14px;
-		margin-bottom: 10px;
-	}
-
-	.product-footer div {
-		margin-bottom: 10px;
-	}
-
-	.quantity-select {
-		padding: 5px;
-		margin-right: 10px;
-		border-radius: 4px;
-		border: 1px solid #ddd;
-		font-size: 14px;
-	}
-
-	.add-to-cart {
-		padding: 8px 12px;
-		background-color: #4CAF50;
-		color: white;
-		border: none;
-		border-radius: 4px;
-		cursor: pointer;
-	}
-
-	.add-to-cart:hover {
-		background-color: #45a049;
-	}
-
-
-	.cart {
-		width: 25%;
-		border: 1px solid #ddd;
-		padding: 15px;
-		background-color: #f9f9f9;
-		border-radius: 8px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
-
-	.cart h3 {
-		margin-bottom: 20px;
-	}
-
-	.cart button {
-		padding: 10px;
-		background-color: #007BFF;
-		color: white;
-		border: none;
-		border-radius: 4px;
-		width: 100%;
-		cursor: pointer;
-	}
-
-	.cart button:hover {
-		background-color: #0056b3;
-	}
-
-
-	.back-button {
-		display: block;
-		margin: 20px auto;
-		padding: 10px 20px;
-		background-color: #007BFF;
-		color: white;
-		border: none;
-		border-radius: 4px;
-		cursor: pointer;
-	}
-
-	.back-button a {
-		color: white;
-		text-decoration: none;
-	}
-
-	.back-button:hover {
-		background-color: #0056b3;
-	}
+	/* Custom styles for cart icon */
 	.remove-from-cart {
-		color: red !important;
+		color: red;
 		font-size: 20px;
-		background: none;
-		border: none;
 		cursor: pointer;
-		margin-left: 10px;
+		transition: color 0.3s ease;
 	}
 
 	.remove-from-cart:hover {
-		color: darkred !important;
+		color: darkred;
 	}
 </style>
