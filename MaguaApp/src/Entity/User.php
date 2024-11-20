@@ -47,7 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $address = null;
 
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user_id')]
-    private Collection $user;
+    private Collection $orders;
 
     public function __construct()
     {
@@ -182,11 +182,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->user;
     }
 
-    public function addUser(Order $user): static
+    public function addOrder(Order $order): static
     {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-            $user->setUserId($this);
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setUserId($this);
         }
 
         return $this;

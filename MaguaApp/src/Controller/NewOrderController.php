@@ -65,7 +65,7 @@ class NewOrderController extends AbstractController
         
 
         $entityManager->flush();
-        $user->addUser();
+        $user->addOrder($order);
 
         return $this->json([
             'message' => 'Order created successfully',
