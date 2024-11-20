@@ -4,68 +4,56 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		{% block title %}
-			<title>Welcome!</title>
+			<title class="text-2xl font-semibold text-gray-800">Welcome!</title>
 		{% endblock %}
+		{{ encore_entry_link_tags('app') }}
 		{% block stylesheets %}
-			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 		{% endblock %}
 	</head>
 
-	<body>
+	<body class="bg-gray-100 font-sans">
 
 		{% block header %}
 
-			<h1>
-				WELCOME TO MAGUA!
-			</h1>
+			
 
-			<h3>
+					<div class="w-full h-[25vh] bg-[#63c3db]">
+						<h1 class="text-4xl font-bold text-center">WELCOME TO MAGUA!</h1>
+					
+					
 
-				<a href="{{ path ('app_product_index') }}">
-					Products
-				</a>
-			</h3>
+							<h3 class="text-orange-950 mt-4">
+								Do you have an account?
+							</h3>
 
-			<h3>
-				Do you have account?
-			</h3>
-
-			<h3>
-				Log in
-				<a href="{{ path ('app_login') }}">
-					here
-				</a>
-			</h3>
-			<h3>
-				Register
-				<a href="{{ path ('app_register') }}">
-					here
-				</a>
-			</h3>
+							<h3>
+								Log in
+								<a href="{{ path('app_login') }}" class="text-blue-500 hover:text-blue-700">here</a>
+							</h3>
+							<h3>
+								Register
+								<a href="{{ path('app_register') }}" class="text-blue-500 hover:text-blue-700">here</a>
+							</h3>
+					</div>
+			
 
 		{% endblock %}
 
-
 		{% block body %}
-
-
-			<div>
-				<h1>
-					advertising spots
-				</h1>
-
+		<main class="bg-red-700">
+			<div class="container mx-auto py-8">
+				<h1 class="text-3xl font-semibold">Advertising spots</h1>
 			</div>
+		</main>
 		{% endblock %}
 
 		{% block footer %}
-
-			<h1>
-				FOOTER!
-			</h1>
-
-
+			<footer class="bg-gray-900 text-white text-center py-4">
+				<h1>FOOTER!</h1>
+			</footer>
 		{% endblock %}
-
 
 	</body>
 </html>
+
