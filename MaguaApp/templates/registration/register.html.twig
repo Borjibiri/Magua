@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 	<head>
@@ -7,66 +6,91 @@
 		{% block title %}
 			<title>Register form</title>
 		{% endblock %}
+		{{ encore_entry_link_tags('app') }}
+		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 	</head>
-</html>
 
-{% block body %}
-	<div></div>
+	<body class="bg-gray-100 font-sans flex flex-col min-h-screen">
 
-	<!-- Contenedor del formulario de registro -->
-	<div>
-		<div>
-			<h1>Register</h1>
+		{% block header %}
+			<header class="w-full bg-[#63c3db]">
+				<div
+					class="flex justify-center items-center p-4">
+					<!-- Título MAGUA -->
+					<div class="text-[#ffebeb] text-5xl font-normal font-['Major Mono Display'] tracking-wider">
+						MAGUA
+					</div>
+				</div>
+			</header>
+		{% endblock %}
 
-			{{ form_errors(registrationForm) }}
+		{% block body %}
+			<main class="flex-grow flex items-center justify-center bg-blue-700 py-8">
+				<div class="max-w-2xl w-full bg-white p-6 rounded-lg shadow-lg">
+					<h1 class="text-3xl font-semibold text-center mb-6 text-gray-800">Register</h1>
 
-			{{ form_start(registrationForm) }}
-			<div>
-				{{ form_row(registrationForm.name) }}
-			</div>
-			<div>
-				{{ form_row(registrationForm.surname) }}
-			</div>
-			<div>
-				{{ form_row(registrationForm.phone) }}
-			</div>
-			<div>
-				{{ form_row(registrationForm.email) }}
-			</div>
-			<div>
-				{{ form_row(registrationForm.address) }}
-			</div>
-			<div>
-				{{ form_row(registrationForm.plainPassword, { label: 'Password' }) }}
-			</div>
+					<!-- Mostrar los errores del formulario -->
+					<div class="text-red-500 mb-4">
+						{{ form_errors(registrationForm) }}
+					</div>
 
-			<!-- Checkbox de términos y condiciones con enlace -->
-			<div>
-				{{ form_widget(registrationForm.agreeTerms) }}
-				<label for="{{ registrationForm.agreeTerms.vars.id }}">
-					<p>I agree to the
-						<a href="{{ path ('app_terms') }}" target="_blank">terms and conditions</a>
-					</p>
-				</label>
-			</div>
+					{{ form_start(registrationForm) }}
 
-			<div>
-				<button type="submit">Register</button>
-			</div>
-			{{ form_end(registrationForm) }}
+					<!-- Campos del formulario -->
+					<div class="mb-4">
+						{{ form_row(registrationForm.name, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
+					</div>
+					<div class="mb-4">
+						{{ form_row(registrationForm.surname, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
+					</div>
+					<div class="mb-4">
+						{{ form_row(registrationForm.phone, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
+					</div>
+					<div class="mb-4">
+						{{ form_row(registrationForm.email, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
+					</div>
+					<div class="mb-4">
+						{{ form_row(registrationForm.address, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
+					</div>
+					<div class="mb-4">
+						{{ form_row(registrationForm.plainPassword, { label: 'Password', 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
+					</div>
 
-			<div>
-				<p>Return home page
-					<a href="{{ path('app_base') }}">here</a>
-				</p>
-			</div>
-		</div>
-	</div>
-{% endblock %}
+					<!-- Checkbox de términos y condiciones con enlace -->
+					<div class="mb-4 flex items-center">
+						{{ form_widget(registrationForm.agreeTerms, { 'attr': {'class': 'mr-2'} }) }}
+						<label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-gray-700">
+							<p>I agree to the
+								<a href="{{ path('app_terms') }}" target="_blank" class="text-blue-500 hover:text-blue-700">terms and conditions</a>
+							</p>
+						</label>
+					</div>
 
-{% block javascripts %}
-	<script>
-		function initRipples() {
+					<!-- Botón de registro -->
+					<div class="mb-4">
+						<button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600">Register</button>
+					</div>
+
+					{{ form_end(registrationForm) }}
+
+					<div class="text-center mt-4">
+						<p>Return home page
+							<a href="{{ path('app_base') }}" class="text-blue-500 hover:text-blue-700">here</a>
+						</p>
+					</div>
+				</div>
+			</main>
+		{% endblock %}
+
+		{% block footer %}
+			<footer class="bg-blue-500 text-right text-white text-base font-normal font-['Sora'] py-4 mt-auto">
+				Magua© 2024
+			</footer>
+		{% endblock %}
+
+		{% block javascripts %}
+			<script>
+				function initRipples() {
 setInterval(() => {
 const rippleBackground = document.querySelector('.ripple-background');
 const ripple = document.createElement('div');
@@ -86,9 +110,8 @@ setTimeout(() => ripple.remove(), 6000);
 }
 
 window.onload = initRipples;
-	</script>
-{% endblock %}
+			</script>
+		{% endblock %}
 
-
-
-
+	</body>
+</html>
