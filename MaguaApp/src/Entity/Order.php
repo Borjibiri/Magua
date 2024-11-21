@@ -20,7 +20,7 @@ class Order
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
-    private ?string $status = null;
+    private ?string $status = "Pending";
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $total_amount = null;
@@ -37,12 +37,12 @@ class Order
         return $this->id;
     }
 
-    public function getStatus(): ?float
+    public function getStatus(): ?String
     {
         return $this->status;
     }
 
-    public function setStatus(?float $status): static
+    public function setStatus(?String $status): static
     {
         $this->status = $status;
 

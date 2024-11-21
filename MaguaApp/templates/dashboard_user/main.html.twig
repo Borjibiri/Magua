@@ -1,91 +1,51 @@
-{# <!DOCTYPE html>
-<html lang="es">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		{% block title %}
-			<title>User Page</title>
-		{% endblock %}
-		{{ encore_entry_link_tags('app') }}
-		{% block stylesheets %}
-			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-		{% endblock %}
-	</head> #}
+{% extends "base.html.twig" %}
+{% block header %}
+	<header
+class="bg-[#63c3db] shadow-md p-6 h-28 flex items-center justify-between">
+			<h1 class="text-2xl font-semibold text-[#ffebeb]">
+				Welcome,
+				{{ user.name }}
+			</h1>
 
-	{% extends "base.html.twig" %}
-{# 
-	<body class="bg-gray-100 font-sans flex flex-col min-h-screen"> #}
+			<nav>
+				<ul
+					class="flex items-center space-x-6">
+					<li>
+						<a href="{{ path('app_product_index') }}" class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+							Make an order
+						</a>
+					</li>
+					<li>
+						<a href="{{ path('app_logout') }}" class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+							Log out
+						</a>
+					</li>
+					<li>
+						<a href="#" class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+							About Us
+						</a>
+					</li>
+				</ul>
+			</nav>
+	
+	</header>
+{% endblock %}
 
-		{% block header %}
-			<header
-				class="bg-[#63c3db] shadow-md p-6">
-				<!-- Aumentamos la altura del header -->
+{% block main %}
+	<main class="flex-grow bg-white p-8 h-full">
+		<h1 class="text-3xl mb-6">My Orders</h1>
+		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+			{% for order in orders %}
 				<div
-					class="flex items-center justify-between">
-					<!-- Aumentamos el tamaño del h1 -->
-					<h1 class="text-2xl font-semibold text-[#ffebeb]">
-						Welcome,
-						{{ user.name }}
-					</h1>
-					<nav>
-						<ul
-							class="flex items-center space-x-6">
-							<!-- Menú con más separación y movido a la izquierda -->
-							<li>
-								<a
-									href="{{ path('app_product_index') }}" class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
-									<!-- Hover más fuerte -->
-									Make an order
-								</a>
-							</li>
-							<li>
-								<a href="{{ path('app_logout') }}" class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
-									Log out
-								</a>
-							</li>
-							<li>
-								<a href="#" class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
-									About Us
-								</a>
-							</li>
-						</ul>
-					</nav>
+					class="border rounded-lg p-4 shadow-md bg-white transition-transform duration-300 hover:scale-105">
+					<p class="font-semibold text-lg text-gray-700">Order #{{ order.id }}</p>
+					<p class="text-gray-600">Status:
+						{{ order.status }}</p>
+					<p class="text-gray-600">Total:
+						{{ order.getTotalAmount }}
+						Euros</p>
 				</div>
-			</header>
-		{% endblock %}
-
-		{% block main %}
-			<main
-				class="flex-grow bg-white py-8 px-4 h-full">
-
-				<!-- Tabla de pedidos con efecto hover -->
-				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-					{% for order in orders %}
-						<div
-							class="border rounded-lg p-4 shadow-md bg-white transition-transform duration-300 hover:scale-105">
-							<!-- Efecto hover -->
-							<p class="font-semibold text-lg text-gray-700">Order #{{ order.id }}</p>
-							<p class="text-gray-600">Status:
-								{{ order.status }}</p>
-							<p class="text-gray-600">Total:
-								{{ order.getTotalAmount }}
-								Euros</p>
-						</div>
-					{% endfor %}
-				</div>
-			</main>
-		{% endblock %}
-
-		{# {% block footer %}
-			<footer
-				class="bg-blue-500 text-white text-center py-6 mt-auto">
-				<!-- Footer con mayor altura -->
-				<button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition">
-					<a href="{{ path('app_main') }}">BACK</a>
-				</button>
-			</footer>
-		{% endblock %} #}
-
-	{# </body> #}
-{# </html> #}
-
+			{% endfor %}
+		</div>
+	</main>
+{% endblock %}

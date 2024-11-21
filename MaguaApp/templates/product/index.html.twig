@@ -69,11 +69,23 @@
 		</div>
 
 		<!-- Cart Section -->
-		<div class="cart bg-gray-100 p-6 rounded-lg shadow-lg w-1/4">
+		<div class="cart bg-gray-100 p-6 rounded-lg w-1/4 shadow-xl border border-gray-300">
 			<h3 class="text-xl font-semibold mb-4">Your Cart</h3>
-			<p class="text-gray-700 mb-4">Items: 0</p>
-			<p class="text-gray-700 mb-4">Total: 0 €</p>
+
+<div>
+<div class="flex items-center pb-6">
+<h2 class="pr-6 text-lg font-bold">Uds</h2>
+<h2 class="pr-14 text-lg font-bold">Product</h2>
+<h2 class="text-lg font-bold">Price</h2>
+</div>
 			<div id="cart-items-list"></div>
+			<div class="flex justify-between items-center pt-6">
+<p class="text-gray-700 mb-4">Items: 0</p>
+<p class="text-gray-700 mb-4 font-bold text-2xl">Total: 0 €</p>
+			</div>
+</div>
+
+
 			<button onclick="sendCart()" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition w-full">
 				Proceed to Checkout
 			</button>
@@ -168,12 +180,12 @@ totalItems += item.quantity;
 totalAmount += item.total;
 
 cartItemsHTML += `
-					<div class="cart-item flex justify-between items-center mb-4" id="cart-item-${
+					<div class="cart-item flex justify-between items-center mb-4 bg-white shadow-lg p-4 rounded-lg" id="cart-item-${
 item.id
 }">
-						<span class="text-gray-700 text-sm">(x${
+						<span class="text-gray-700 text-lg">${
 item.quantity
-}) - ${
+} - ${
 item.name
 } - ${
 item.total.toFixed(2)
@@ -182,7 +194,9 @@ item.total.toFixed(2)
 					</div>`;
 });
 
-cartItems.innerHTML = cartItemsHTML;
+cartItems.innerHTML = cartItemsHTML
+
+
 document.querySelector('.cart p:nth-of-type(1)').innerText = `Items: ${totalItems}`;
 document.querySelector('.cart p:nth-of-type(2)').innerText = `Total: ${
 totalAmount.toFixed(2)
