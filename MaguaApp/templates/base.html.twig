@@ -10,20 +10,29 @@
 		{% block stylesheets %}
 			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 		{% endblock %}
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
 	</head>
 
 	<body class="h-[calc(100%-192px)]">
 		{% block header %}
 			<header class="w-full bg-[#63c3db] h-28 flex justify-between items-center px-8">
 
-				<h1 class="text-[#ffebeb] text-5xl font-normal font-['major mono display' ] tracking-wider">MAGUA</h1>
+				<h1 class="text-[#ffebeb] text-6xl font-normal font-major-mono tracking-wider">MAGUA</h1>
 
-				<nav class="space-x-8 text-white text-lg">
-					<a href="#" class="hover:text-[#ffebeb]">Order</a>
-					<a href="#" class="hover:text-[#ffebeb]">Products</a>
-					<a href="#" class="hover:text-[#ffebeb]">About</a>
-					<a href="{{ path('app_login') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Login</a>
-					<a href="{{ path('app_register') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">Register</a>
+
+				<nav class="space-x-8 text-white text-xl">
+					<a href="#" class="hover:text-blue-500 font-normal font-major-mono tracking-wider">Order</a>
+					<a href="#" class="hover:text-blue-500 font-normal font-major-mono tracking-wider">Products</a>
+					<a href="#" class="hover:text-blue-500 font-normal font-major-mono tracking-wider">About</a>
+					<a href="{{ path('app_login') }}" class="text-[#ffebeb] border-2 border-white px-4 py-2 rounded-lg font-normal font-major-mono tracking-wider hover:text-blue-500 hover:border-blue-500">
+						Login
+					</a>
+					<a href="{{ path('app_register') }}" class="text-[#ffebeb] border-2 border-white px-4 py-2 rounded-lg font-normal font-major-mono tracking-wider hover:text-blue-500 hover:border-blue-500">
+						Register
+					</a>
+
 				</nav>
 			</header>
 		{% endblock %}
@@ -32,14 +41,28 @@
 			<div class="h-full bg-cover bg-center" style="background-image: url('{{ asset('img/bg1.png') }}')"></div>
 		{% endblock %}
 
-		<footer class="bg-[#336e7d] h-20 flex items-center justify-between">
-			<div>
-			</div>
-			<p class="text-center text-white font-normal font-['Sora'] ">Magua© 2024</p>
-			<div>
-			</div>
+		<footer class="h-20 flex items-center justify-between bg-cover" style="background-image: url('{{ asset('img/footer.png') }}')">
 
+			<p class="text-center text-white text-2xl font-normal font-['Sora'] mr-auto ml-auto">Magua© 2024</p>
+
+
+			<div
+				class="flex space-x-6 mr-6">
+				<!-- Icono de Instagram -->
+				<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
+					<i class="fab fa-instagram"></i>
+				</a>
+				<!-- Icono de X (Twitter) -->
+				<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
+					<i class="fab fa-twitter"></i>
+				</a>
+				<!-- Icono de Facebook -->
+				<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
+					<i class="fab fa-facebook-f"></i>
+				</a>
+			</div>
 		</footer>
+
 
 	</body>
 </html>

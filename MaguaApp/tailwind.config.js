@@ -6,7 +6,11 @@ module.exports = {
     "/src/**/*.vue",
     ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'major-mono': ['Major Mono Display', 'monospace'],
+      },
+    },
   },
   plugins: [],
 }
