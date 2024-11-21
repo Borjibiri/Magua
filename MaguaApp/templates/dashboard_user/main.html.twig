@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{# <!DOCTYPE html>
 <html lang="es">
 	<head>
 		<meta charset="UTF-8">
@@ -10,9 +10,12 @@
 		{% block stylesheets %}
 			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 		{% endblock %}
-	</head>
+	</head> #}
 
-	<body class="bg-gray-100 font-sans flex flex-col min-h-screen">
+	{% extends "base.html.twig" %}
+{# 
+	<body class="bg-gray-100 font-sans flex flex-col min-h-screen"> #}
+
 		{% block header %}
 			<header
 				class="bg-[#63c3db] shadow-md p-6">
@@ -51,9 +54,9 @@
 			</header>
 		{% endblock %}
 
-		{% block body %}
+		{% block main %}
 			<main
-				class="flex-grow bg-white py-8 px-4">
+				class="flex-grow bg-white py-8 px-4 h-full">
 
 				<!-- Tabla de pedidos con efecto hover -->
 				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -73,7 +76,7 @@
 			</main>
 		{% endblock %}
 
-		{% block footer %}
+		{# {% block footer %}
 			<footer
 				class="bg-blue-500 text-white text-center py-6 mt-auto">
 				<!-- Footer con mayor altura -->
@@ -81,8 +84,8 @@
 					<a href="{{ path('app_main') }}">BACK</a>
 				</button>
 			</footer>
-		{% endblock %}
+		{% endblock %} #}
 
-	</body>
-</html>
+	{# </body> #}
+{# </html> #}
 

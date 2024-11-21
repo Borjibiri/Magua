@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="h-screen">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,11 +12,10 @@
 		{% endblock %}
 	</head>
 
-	<body class="bg-gray-100 font-sans flex flex-col min-h-screen">
-
+	<body class="h-[calc(100%-160px)]">
 		{% block header %}
 			<header
-				class="w-full bg-[#63c3db]">
+				class="w-full bg-[#63c3db] h-20">
 				<!-- Contenedor de la barra de navegación -->
 				<div
 					class="flex justify-between items-center p-4">
@@ -39,20 +38,30 @@
 			</header>
 		{% endblock %}
 
-		{% block body %}
-			<main class="bg-blue-700 flex-grow">
+{# style="background-image: url('{{ asset('img/bg1.png') }}')" #}
+
+		{% block main %}
+			<div class="bg-blue-500 h-full">
 				<div class="container mx-auto py-8">
 					<h1 class="text-3xl font-semibold text-white">BODY!</h1>
+					<h2>aolskjasdl</h2>
 				</div>
-			</main>
+			</div>
 		{% endblock %}
 
-		{% block footer %}
-			<footer class="bg-blue-500 text-right text-white text-base font-normal font-['Sora'] py-4 mt-auto">
-				Magua© 2024
-			</footer>
-		{% endblock %}
+<footer class="bg-[#336e7d] text-right text-white text-base font-normal font-['Sora'] h-20">
+
+		Magua© 2024
+		</footer>
 
 	</body>
 </html>
+{# <style>
+.our-main{
+	background-image: url('/home/reboot-student/code/proyecto/Magua/MaguaApp/public/img/bg1.png');
+	background-size: cover;
+	background-position: center;
+}
 
+
+</style> #}
