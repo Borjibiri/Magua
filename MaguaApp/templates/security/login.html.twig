@@ -7,7 +7,9 @@
 			<title>Log in</title>
 		{% endblock %}
 		{{ encore_entry_link_tags('app') }}
-		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+		{% endblock %}
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 	</head>
 
@@ -35,7 +37,7 @@
 
 				<div class="w-full flex  justify-center">
 					<div class="h-full w-100 bg-[#20a1c1] p-6 rounded-lg shadow-lg">
-						<h3 class="text-black text-4xl mb-4 font-normal font-major-mono tracking-wider">Please sign in</h3>
+						<h3 class="text-black text-4xl mb-4 font-normal font-major-mono tracking-wider">pleAse sign in</h3>
 						<form method="post">
 							{% if error %}
 								<div class="text-red-500 mb-4">
@@ -52,31 +54,31 @@
 							{% endif %}
 
 							<div class="mb-4">
-								<label for="inputEmail" class="text-black text-2lg font-normal font-major-mono tracking-wider">Email</label>
+								<label for="inputEmail" class="text-black text-2lg font-normal font-major-mono tracking-wider">emAil</label>
 								<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="w-full p-3 mt-1 border border-gray-300 rounded-lg" required autofocus>
 							</div>
 
 							<div class="mb-6">
-								<label for="inputPassword" class="text-black text-2lg font-normal font-major-mono tracking-wider">Password</label>
+								<label for="inputPassword" class="text-black text-2lg font-normal font-major-mono tracking-wider">pAsswoRd</label>
 								<input type="password" name="password" id="inputPassword" class="w-full p-3 mt-1 border border-gray-300 rounded-lg" required>
 							</div>
 
 							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 							<button type="submit" class="w-full bg-black text-white font-normal font-major-mono tracking-wider py-3 rounded-lg active:scale-95 active:bg-gray-800">
-								Sign in
+								sign in
 							</button>
 						</form>
 
 						<div class="mt-4 text-center text-black text-2lg font-normal font-major-mono tracking-wider">
-							<p>Don't have an account?
-								<a href="{{ path('app_base') }}" class="text-black underline text-2lg font-normal font-major-mono tracking-wider">Register</a>
+							<p>don't hAve An Account?
+								<a href="{{ path('app_base') }}" class="text-black underline text-2lg font-normal font-major-mono tracking-wider">RegisteR</a>
 							</p>
 						</div>
 
 						<div class="mt-4 text-center text-black text-2lg font-normal font-major-mono tracking-wider">
-							<p>Return to the
-								<a href="{{ path('app_base') }}" class="text-black underline text-2lg font-normal font-major-mono tracking-wider">home page</a>
+							<p>bAck to
+								<a href="{{ path('app_base') }}" class="text-black underline text-2lg font-normal font-major-mono tracking-wider">home pAge</a>
 							</p>
 						</div>
 					</div>
@@ -94,15 +96,12 @@
 
 				<div
 					class="flex space-x-6 mr-6">
-					<!-- Icono de Instagram -->
 					<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
 						<i class="fab fa-instagram"></i>
 					</a>
-					<!-- Icono de X (Twitter) -->
 					<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
 						<i class="fab fa-twitter"></i>
 					</a>
-					<!-- Icono de Facebook -->
 					<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
 						<i class="fab fa-facebook-f"></i>
 					</a>
