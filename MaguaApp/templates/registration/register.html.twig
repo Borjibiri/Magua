@@ -23,63 +23,83 @@
 		{% endblock %}
 
 
-		{% block body %}
-			<main class="flex-grow flex items-center justify-center bg-blue-700 py-8">
-				<div class="max-w-2xl w-full bg-white p-6 rounded-lg shadow-lg">
-					<h1 class="text-3xl font-semibold text-center mb-6 text-gray-800">Register</h1>
+{% block main %}
+	<main
+		class="h-screen flex bg-[#20a1c1]">
+		<!-- Imagen a la izquierda -->
+		<div class="hidden md:flex w-1/2 items-center justify-center bg-[#20a1c1]">
+			<img src="{{ asset('img/register.png') }}" alt="Imagen decorativa" class="w-full h-full object-cover">
+		</div>
 
-					<!-- Mostrar los errores del formulario -->
-					<div class="text-red-500 mb-4">
-						{{ form_errors(registrationForm) }}
-					</div>
+		<!-- Formulario de registro -->
+		<div class="w-full md:w-1/2 flex items-center justify-center">
+			<div class="w-full h-full p-8 flex flex-col justify-center items-center bg-[#20a1c1]">
+				<h1 class="text-black text-4xl mb-6 font-normal font-major-mono tracking-wider text-center">
+					Register
+				</h1>
 
-					{{ form_start(registrationForm) }}
+				<!-- Mostrar los errores del formulario -->
+				<div class="text-red-500 mb-4 w-full max-w-lg">
+					{{ form_errors(registrationForm) }}
+				</div>
 
-					<!-- Campos del formulario -->
-					<div class="mb-4">
-						{{ form_row(registrationForm.name, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
-					</div>
-					<div class="mb-4">
-						{{ form_row(registrationForm.surname, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
-					</div>
-					<div class="mb-4">
-						{{ form_row(registrationForm.phone, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
-					</div>
-					<div class="mb-4">
-						{{ form_row(registrationForm.email, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
-					</div>
-					<div class="mb-4">
-						{{ form_row(registrationForm.address, { 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
-					</div>
-					<div class="mb-4">
-						{{ form_row(registrationForm.plainPassword, { label: 'Password', 'attr': {'class': 'w-full p-3 border border-gray-300 rounded-lg'} }) }}
-					</div>
+				{{ form_start(registrationForm) }}
 
-					<!-- Checkbox de términos y condiciones con enlace -->
-					<div class="mb-4 flex items-center">
-						{{ form_widget(registrationForm.agreeTerms, { 'attr': {'class': 'mr-2'} }) }}
-						<label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-gray-700">
-							<p>I agree to the
-								<a href="{{ path('app_terms') }}" target="_blank" class="text-blue-500 hover:text-blue-700">terms and conditions</a>
-							</p>
-						</label>
-					</div>
-
-					<!-- Botón de registro -->
+				<!-- Campos del formulario -->
+				<div class="w-full max-w-lg">
 					<div class="mb-4">
-						<button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600">Register</button>
+						{{ form_row(registrationForm.name, { 'attr': {'class': 'w-full p-4 border border-gray-300 rounded-full'} }) }}
 					</div>
-
-					{{ form_end(registrationForm) }}
-
-					<div class="text-center mt-4">
-						<p>Return home page
-							<a href="{{ path('app_base') }}" class="text-blue-500 hover:text-blue-700">here</a>
-						</p>
+					<div class="mb-4">
+						{{ form_row(registrationForm.surname, { 'attr': {'class': 'w-full p-4 border border-gray-300 rounded-full'} }) }}
+					</div>
+					<div class="mb-4">
+						{{ form_row(registrationForm.phone, { 'attr': {'class': 'w-full p-4 border border-gray-300 rounded-full'} }) }}
+					</div>
+					<div class="mb-4">
+						{{ form_row(registrationForm.email, { 'attr': {'class': 'w-full p-4 border border-gray-300 rounded-full'} }) }}
+					</div>
+					<div class="mb-4">
+						{{ form_row(registrationForm.address, { 'attr': {'class': 'w-full p-4 border border-gray-300 rounded-full'} }) }}
+					</div>
+					<div class="mb-4">
+						{{ form_row(registrationForm.plainPassword, { label: 'Password', 'attr': {'class': 'w-full p-4 border border-gray-300 rounded-full'} }) }}
 					</div>
 				</div>
-			</main>
-		{% endblock %}
+
+				<!-- Checkbox de términos y condiciones con enlace -->
+				<div class="mb-4 flex items-center w-full max-w-lg">
+					{{ form_widget(registrationForm.agreeTerms, { 'attr': {'class': 'mr-2'} }) }}
+					<label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-black text-sm">
+						I agree to the
+						<a href="{{ path('app_terms') }}" target="_blank" class="text-black underline">terms and conditions</a>.
+					</label>
+				</div>
+
+				<!-- Botón de registro -->
+				<div class="mb-4 w-full max-w-lg">
+					<button type="submit" class="w-full bg-black text-white py-3 rounded-full hover:bg-gray-800 active:scale-95">
+						Register
+					</button>
+				</div>
+
+				{{ form_end(registrationForm) }}
+
+				<div class="mt-4 text-center text-black text-sm">
+					<p>Return to the
+						<a href="{{ path('app_base') }}" class="text-black underline">home page</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+
+
+
+
+
+
 
 		{% block footer %}
 			<footer class="h-20 flex items-center justify-between bg-cover" style="background-image: url('{{ asset('img/footer.png') }}')">

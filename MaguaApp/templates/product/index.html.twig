@@ -6,6 +6,7 @@
 		{% block title %}
 			<title>Order Page</title>
 		{% endblock %}
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 	</head>
 </html>
 
@@ -15,26 +16,25 @@
 {% endblock %}
 
 {% block header %}
-	<header class="bg-blue-600 shadow-md p-6">
-		<div class="flex items-center justify-between">
-			<h1 class="text-2xl font-semibold text-white">Welcome to your Order</h1>
+	<header class="w-full bg-[#63c3db] h-28 flex justify-between items-center px-8">
+			<h1 class="text-[#ffebeb] text-4xl font-normal font-major-mono tracking-wider">weLcome To yoUr ordeR</h1>
 			<nav>
 				<ul class="flex items-center space-x-6">
 					<li>
-						<a href="{{ path('app_logout') }}" class="logout-button text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md transition">Log out</a>
+<a href="{{ path('app_logout') }}" class="text-black border-2 border-black px-4 py-2 rounded-lg font-normal font-major-mono tracking-wider hover:text-blue-500 hover:border-blue-500">Log out</a>
+
 					</li>
 					<li>
-						<a href="{{ path('app_main') }}" class="logout-button text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md transition">Back to profile</a>
+<a href="{{ path('app_main') }}" class="text-black border-2 border-black px-4 py-2 rounded-lg font-normal font-major-mono tracking-wider hover:text-blue-500 hover:border-blue-500">Back to profile</a>
+
 					</li>
 				</ul>
 			</nav>
-		</div>
 	</header>
 {% endblock %}
 
-{% block body %}
-	<div
-		class="main-content flex justify-between gap-8 p-8">
+{% block main %}
+	<div class="bg-[#20a1c1] main-content flex justify-between gap-8 p-8">
 		<!-- Product Section -->
 		<div class="product-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-3/4">
 			{% for product in products %}
@@ -93,11 +93,28 @@
 	</div>
 {% endblock %}
 
-{% block footer %}
-			<footer class="bg-blue-500 text-right text-white text-base font-normal font-['Sora'] py-4 mt-auto">
-				Magua© 2024
-			</footer>
-{% endblock %}
+<footer class="h-20 flex items-center justify-between bg-cover" style="background-image: url('{{ asset('img/footer.png') }}')">
+
+	<p class="text-center text-white text-2xl font-normal font-['Sora'] mr-auto ml-auto">Magua© 2024</p>
+
+
+	<div
+		class="flex space-x-6 mr-6">
+		<!-- Icono de Instagram -->
+		<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
+			<i class="fab fa-instagram"></i>
+		</a>
+		<!-- Icono de X (Twitter) -->
+		<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
+			<i class="fab fa-twitter"></i>
+		</a>
+		<!-- Icono de Facebook -->
+		<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
+			<i class="fab fa-facebook-f"></i>
+		</a>
+	</div>
+</footer>
+
 
 {% block javascripts %}
 	<script>
@@ -171,6 +188,7 @@ function updateCart() {
 let totalItems = 0;
 let totalAmount = 0;
 let cartItemsHTML = '';
+
 
 let cartItems = document.getElementById('cart-items-list');
 cartItems.innerHTML = ''; // Clear cart items list
