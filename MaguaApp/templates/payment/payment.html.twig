@@ -11,6 +11,7 @@
 			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 		{% endblock %}
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 	</head>
 
 	<body class="min-h-screen flex flex-col">
@@ -28,47 +29,61 @@
 		{% block main %}
 			<main class="flex-grow bg-[#20a1c1] flex justify-center items-center py-12">
 				<div class="flex space-x-8">
-					<div class="flex flex-col items-center justify-between w-[35vw] h-[60vh] bg-white rounded-2xl shadow-lg p-6 transform hover:scale-105 transition duration-300 ease-in-out">
+					<div class="flex flex-col items-center justify-between w-[35vw] h-[60vh] bg-white rounded-2xl shadow-lg p-6 transform ">
 						<h3 class="text-black text-2xl mb-4 font-semibold">Pay with card</h3>
 						<label for="card" class="text-gray-700 text-sm font-medium">Card information</label>
 						<input type="text" name="cardholder" class="w-[80%] mb-4 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#20a1c1]" placeholder="Full name on card">
 						<input type="text" name="card" class="w-[80%] mb-4 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#20a1c1]" placeholder="Card number">
 						<input type="text" class="w-[80%] mb-4 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#20a1c1]" placeholder="MM/YY">
 						<input type="text" class="w-[80%] mb-4 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#20a1c1]" placeholder="CVC">
-						<button type="submit" class="w-[80%] bg-green-600 text-white rounded-lg p-3 hover:bg-green-700 transition duration-200">Pay</button>
-					</div>
+						<button type="submit" class="w-[80%] bg-green-600 text-white rounded-lg p-3 hover:bg-green-700 transition duration-300 ease-in-out transform hover:scale-110 font-poppins">
+							Pay with card
+						</button>
 
-					<div class="flex flex-col items-center justify-between w-[35vw] h-[60vh] bg-white rounded-2xl shadow-lg p-6 transform hover:scale-105 transition duration-300 ease-in-out">
-						<h3 class="text-black text-2xl mb-4 font-semibold">Pay directly</h3>
-						<p class="text-gray-700 text-center mb-6">You can pay directly at the location</p>
-						<div class="w-full flex justify-center mb-6">
-							<img src="{{ asset('img/repartidor.jpg') }}" alt="repartidor de agua" class="max-w-[80%] max-h-[80%] object-contain rounded-lg shadow-md">
+						<div class="mt-6 flex space-x-4">
+							<i class="fab fa-cc-visa text-blue-600 text-3xl transform hover:scale-110 transition duration-200 shadow-lg"></i>
+							<i class="fab fa-cc-mastercard text-red-600 text-3xl transform hover:scale-110 transition duration-200 shadow-lg"></i>
+							<i class="fab fa-cc-amex text-green-600 text-3xl transform hover:scale-110 transition duration-200 shadow-lg"></i>
+							<i class="fab fa-cc-discover text-orange-600 text-3xl transform hover:scale-110 transition duration-200 shadow-lg"></i>
 						</div>
-						<a href="{{ path('app_main') }}">
-							<button type="button" class="w-full bg-green-600 text-white rounded-lg pt-3 pb-3 pr-7 pl-7 hover:bg-green-700 transition duration-200">
-								Proceed
-							</button>
-						</a>
-					</div>
-				</div>
-			</main>
-		{% endblock %}
 
-		{% block footer %}
-			<footer class="h-20 flex items-center justify-between bg-cover" style="background-image: url('{{ asset('img/footer.png') }}')">
-				<p class="text-center text-white text-2xl font-normal font-['Sora'] mr-auto ml-auto">Magua© 2024</p>
-				<div class="flex space-x-6 mr-6">
-					<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
-						<i class="fab fa-instagram"></i>
-					</a>
-					<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
-						<i class="fab fa-twitter"></i>
-					</a>
-					<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
-						<i class="fab fa-facebook-f"></i>
+
+					</div>
+
+
+				</div>
+
+				<div class="flex flex-col items-center justify-between w-[35vw] h-[60vh] bg-white rounded-2xl shadow-lg p-6 transform ">
+					<h3 class="text-black text-2xl mb-4 font-semibold">Pay directly</h3>
+					<p class="text-gray-700 text-center mb-6">You can pay directly at the location</p>
+					<div class="w-full flex justify-center mb-6">
+						<img src="{{ asset('img/repartidor.jpg') }}" alt="repartidor de agua" class="max-w-[80%] max-h-[80%] object-contain rounded-lg shadow-md">
+					</div>
+					<a href="{{ path('app_main') }}">
+						<button type="button" class="w-[100%] bg-green-600 text-white rounded-lg pt-3 pb-3 pr-6 pl-6 hover:bg-green-700 transition duration-300 ease-in-out transform hover:scale-110">
+							Proceed
+						</button>
 					</a>
 				</div>
-			</footer>
-		{% endblock %}
-	</body>
+			</div>
+	</html>
+</main>
+{% endblock %}
+{% block footer %}
+<footer class="h-20 flex items-center justify-between bg-cover" style="background-image: url('{{ asset('img/footer.png') }}')">
+	<p class="text-center text-white text-2xl font-normal font-['Sora'] mr-auto ml-auto">Magua© 2024</p>
+	<div class="flex space-x-6 mr-6">
+		<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
+			<i class="fab fa-instagram"></i>
+		</a>
+		<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
+			<i class="fab fa-twitter"></i>
+		</a>
+		<a href="#" class="text-white text-3xl hover:text-[#ffebeb]">
+			<i class="fab fa-facebook-f"></i>
+		</a>
+	</div>
+</footer>
+{% endblock %}
+</body>
 </html>
