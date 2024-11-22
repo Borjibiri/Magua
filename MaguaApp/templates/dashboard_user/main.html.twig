@@ -47,7 +47,7 @@
 		</h2>
 
 		
-		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full h-[400px] overflow-y-auto overflow-x-hidden custom-scrollbar">
+		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full h-[200px] overflow-y-auto overflow-x-hidden custom-scrollbar">
 			{% for order in orders %}
 				<div class="border rounded-lg p-4 shadow-lg bg-gray-100 transition-transform duration-300 hover:bg-gray-300 hover:scale-105 text-center max-w-sm mx-auto">
 					<p class="font-semibold text-lg text-gray-700">Order #{{ order.id }}</p>
@@ -58,8 +58,7 @@
 						Euros</p>
 
 					
-					<div
-						class="relative mt-4 h-16 overflow-hidden">
+					<div class="relative mt-4 h-16 overflow-hidden">
 						
 						<svg class="absolute bottom-0 left-0 w-24 h-16 text-red-500 animate-[moveTruck_3s_ease-in-out_infinite]" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100">
 							<g>
